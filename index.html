@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>python-timezones by amix</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>python-timezones</h1>
+        <p>A Python library that provides better selection of common timezones, can output HTML and auto select the best timezone based on user's IP.</p>
+        <p class="view"><a href="https://github.com/amix/python-timezones">View the Project on GitHub <small>amix/python-timezones</small></a></p>
+        <ul>
+          <li><a href="https://github.com/amix/python-timezones/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/amix/python-timezones/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/amix/python-timezones">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h3>Making Python timezones suck less with timezones</h3>
+
+<p><a href="https://github.com/amix/python-timezones">timezones</a> makes timezones more user-friendly for the users, especially because it picks the best timezone automatically based on the user's IP address.</p>
+
+<div class="highlight">
+<pre><span class="nv">$ </span>sudo pip install timezones
+</pre>
+</div>
+
+
+<p>What the library provides:</p>
+
+<ul>
+<li>User friendly rendering of common timezones. <a href="http://pytz.sourceforge.net/">pytz.common_timezones</a> includes 430 common timezones, without any smart sorting or display of useful information such as timezone offsets. This provides an awful experience if you just present this to the users - - like <a href="https://docs.djangoproject.com/en/dev/topics/i18n/timezones/">it's done in Django</a>
+</li>
+<li>Auto-guessing the user's timezone based on the user's IP. This is done via <a href="http://code.google.com/p/pygeoip/">pygeoip</a>
+</li>
+<li>Supporting fixed offsets timezones, such as "GMT +1:00"</li>
+</ul><h3>Requires</h3>
+
+<ul>
+<li><a href="http://pytz.sourceforge.net/">pytz</a></li>
+<li>
+<a href="http://appliedsec.github.com/pygeoip/">pygeoip</a>: Optional, only if you want to enable auto-guess of the timezone</li>
+</ul><h3>Screenshot of the library in action</h3>
+
+<p><img src="http://i.imgur.com/qP7AA.jpg" alt="timezones screenshot"></p>
+
+<h1>Modules</h1>
+
+<h2>tz_rendering</h2>
+
+<p>HTML helper to render timezones. The output will be a SELECT element.</p>
+
+<p>Will auto guess the user's timezone based on IP. Will auto-select the current selected timezone.</p>
+
+<p>Example usage (returns HTML based on current properties):</p>
+
+<div class="highlight">
+<pre><span class="kn">from</span> <span class="nn">timezones</span> <span class="kn">import</span> <span class="n">tz_rendering</span>
+<span class="n">html_timezones</span> <span class="o">=</span> <span class="n">tz_rendering</span><span class="o">.</span><span class="n">html_render_timezones</span><span class="p">(</span><span class="n">select_name</span><span class="o">=</span><span class="n">timezone</span><span class="s">',</span>
+                                                    <span class="n">current_selected</span><span class="o">=</span><span class="n">current_timezone</span><span class="p">,</span>
+                                                    <span class="n">user_ip</span><span class="o">=</span><span class="n">get_current_ip</span><span class="p">(),</span>
+                                                    <span class="n">first_entry</span><span class="o">=</span><span class="n">_</span><span class="p">(</span><span class="s">'Select your timezone'</span><span class="p">))</span>
+</pre>
+</div>
+
+
+<h2>zones</h2>
+
+<p>Holds a collection of common timezones. Is much smaller and better formated than pytz.common_timezones. It also supports fixed timezones such as <code>GMT +7:00</code>.</p>
+
+<p>Example usage (returns US based timezones):</p>
+
+<div class="highlight">
+<pre><span class="kn">from</span> <span class="nn">timezones</span> <span class="kn">import</span> <span class="n">zones</span>
+<span class="k">for</span> <span class="n">tz_offset</span><span class="p">,</span> <span class="n">tz_name</span><span class="p">,</span> <span class="n">tz_formated</span> <span class="ow">in</span> <span class="n">zones</span><span class="o">.</span><span class="n">get_timezones</span><span class="p">(</span><span class="n">only_us</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">tz_formated</span>
+
+<span class="o">=&gt;</span>
+
+    <span class="s">"(GMT-1000) Hawaii')"</span>
+    <span class="s">"(GMT-0900) Alaska')"</span>
+    <span class="s">"(GMT-0800) Pacific Time (US &amp; Canada)"</span>
+    <span class="o">...</span>
+</pre>
+</div>
+
+
+<h2>tz_utils</h2>
+
+<p>Includes timezone related utilities.</p>
+
+<p>Example usage (get a fixed offset timezone):</p>
+
+<div class="highlight">
+<pre><span class="k">print</span> <span class="n">tz_utils</span><span class="o">.</span><span class="n">get_timezone</span><span class="p">(</span><span class="s">'GMT +10:00'</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<p>Example usage (guess timezone by IP, required pygeoip!)::</p>
+
+<div class="highlight">
+<pre><span class="n">tz_utils</span><span class="o">.</span><span class="n">GEOIP_DATA_LOCATION</span> <span class="o">=</span> <span class="s">'/usr/local/geo_ip/GeoLiteCity.dat'</span>
+<span class="k">assert</span> <span class="n">tz_utils</span><span class="o">.</span><span class="n">guess_timezone_by_ip</span><span class="p">(</span><span class="s">'201.246.115.62'</span><span class="p">)</span> <span class="o">==</span> <span class="s">'Chile/Continental'</span>
+</pre>
+</div>
+
+
+<p>Example usage (format timezone by name)::</p>
+
+<div class="highlight">
+<pre><span class="k">print</span> <span class="n">tz_utils</span><span class="o">.</span><span class="n">format_tz_by_name</span><span class="p">(</span><span class="s">'Europe/Copenhagen'</span><span class="p">)</span>
+<span class="o">=&gt;</span>
+<span class="p">(</span><span class="s">"+0100"</span><span class="p">,</span> <span class="s">"Europe/Copenhagen"</span><span class="p">,</span> <span class="s">'(GMT+0100) Copenhagen'</span><span class="p">)</span>
+</pre>
+</div>
+
+
+<p>Example usage (is a timezone valid?)::</p>
+
+<div class="highlight">
+<pre><span class="k">print</span> <span class="n">tz_utils</span><span class="o">.</span><span class="n">is_valid_timezone</span><span class="p">(</span><span class="s">'Europe/Copenhagen'</span><span class="p">)</span>
+<span class="o">=&gt;</span>
+<span class="bp">True</span>
+</pre>
+</div>
+
+
+<h1>Copyright</h1>
+
+<p>Copyright 2012 by <a href="http://amix.dk/">Amir Salihefendic</a>. Licensed under <a href="http://www.opensource.org/licenses/mit-license.php">MIT license</a>.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/amix">amix</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
