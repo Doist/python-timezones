@@ -117,7 +117,7 @@ def format_tz_by_name(tz_name, tz_formated=None):
             =>
         ("+0100", "Europe/Copenhagen", '(GMT+0100) Copenhagen')
     """
-    now = datetime.now(pytz.timezone(tz_name))
+    now = datetime.now(get_timezone(tz_name))
     offset = now.strftime("%z")
 
     if tz_formated:
