@@ -10,7 +10,7 @@ import os
 from setuptools import setup
 
 setup(name='timezones',
-      version = '1.0',
+      version = '1.1',
       author="amix",
       author_email="amix@amix.dk",
       url="http://www.amix.dk/",
