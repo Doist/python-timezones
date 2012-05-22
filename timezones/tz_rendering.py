@@ -68,7 +68,7 @@ def html_render_timezones(select_name,
     else:
         select_elm = '<select name="%s">' % select_name
 
-    result = [ select_name ]
+    result = [ select_elm ]
 
     if first_entry:
         result.append('<option value="">%s</option>' % first_entry)
