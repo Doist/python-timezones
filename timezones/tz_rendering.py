@@ -25,7 +25,8 @@ def html_render_timezones(select_name,
                           current_selected=None,
                           user_ip=None,
                           first_entry='Select your timezone',
-                          force_current_selected=False):
+                          force_current_selected=False,
+                          select_id=None):
     """Render timezone and output HTML.
 
     `select_name`:
@@ -43,6 +44,9 @@ def html_render_timezones(select_name,
 
     `force_current_selected` (optional):
         Force a show in the top of user's current timezone
+
+    `select_id`:
+        Select's elements id, e.g. <select id="%(select_id)s">.
     """
 
     #Makes it possible to only mark one timezone as selected
@@ -59,8 +63,12 @@ def html_render_timezones(select_name,
     def render_option_disabled():
         return '<option disabled="disabled">--------------------</option>'
 
+    if select_id:
+        select_elm = '<select name="%s" id="%s">' % (select_name, select_id)
+    else:
+        select_elm = '<select name="%s">' % select_name
 
-    result = [ '<select name="%s">' % select_name ]
+    result = [ select_name ]
 
     if first_entry:
         result.append('<option value="">%s</option>' % first_entry)
