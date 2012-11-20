@@ -138,6 +138,7 @@ def _get_geoip_lib():
         return None
 
     GEO_IP = pygeoip.GeoIP(GEOIP_DATA_LOCATION, pygeoip.MEMORY_CACHE)
+
     return GEO_IP
 
 

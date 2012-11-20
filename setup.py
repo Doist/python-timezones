@@ -10,7 +10,7 @@ import os
 from setuptools import setup
 
 setup(name='timezones',
-      version = '1.3',
+      version = '1.6',
       author="amix",
       author_email="amix@amix.dk",
       url="http://www.amix.dk/",
@@ -24,7 +24,7 @@ setup(name='timezones',
       ],
       packages=['timezones'],
       install_requires=[
-        'pygeoip',
+        'pygeoip==0.2.5',
         'pytz'
       ],
       platforms=["Any"],
@@ -37,7 +37,7 @@ timezones
 
 A Python library that provides better selection of common timezones, can output HTML and auto select the best timezone based on user's IP.
 
-Visit http://amix.github.com/python-timezones/ for more information.
+Visit http://doist.github.com/python-timezones/ for more information.
 
-Copyright: 2012 by amix
+Copyright: 2012 by Doist
 License: MIT.""")
