@@ -42,5 +42,17 @@ def test_guess_timezone():
     assert tz_utils.guess_timezone_by_ip('127.0.0.1', only_name=True) == None
 
 
+def test_guess_timezone_by_javascript():
+    asia_yekaterinburg = tz_utils.get_timezone('Asia/Yekaterinburg')
+    for i in xrange(2):  # to ensure that cache breaks nothing
+        assert tz_utils.guess_timezone_by_javascript('Tue Feb 01 2005 00:00:00 GMT+0500 (YEKT)') == asia_yekaterinburg
+        assert tz_utils.guess_timezone_by_javascript('Mon Aug 01 2005 00:00:00 GMT+0600 (YEKST)') == asia_yekaterinburg
+        assert tz_utils.guess_timezone_by_javascript('Mon Aug 01 2005 00:00:00 GMT+0600 (OOOPS)') == None
+
+    assert tz_utils.guess_timezone_by_javascript('Tue Feb 01 2005 00:00:00 GMT+0500 (YEKT)', True) == 'Asia/Yekaterinburg'
+    assert tz_utils.guess_timezone_by_javascript('Mon Aug 01 2005 00:00:00 GMT+0600 (YEKST)', True) == 'Asia/Yekaterinburg'
+    assert tz_utils.guess_timezone_by_javascript('Mon Aug 01 2005 00:00:00 GMT+0600 (OOOPS)', True) == None
+
+
 def test_get_timezonez():
     assert len(list(zones.get_timezones(only_us=True))) == 8
