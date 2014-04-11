@@ -143,7 +143,7 @@ _ALL_TIMEZONES = [
   ("+0200", "Europe/Helsinki", '(GMT+0200) Helsinki'),
   ("+0200", "Europe/Istanbul", '(GMT+0200) Istanbul'),
   ("+0200", "Asia/Jerusalem", '(GMT+0200) Jerusalem'),
-  ("+0200", "Europe/Kiev", '(GMT+0200) Kyev'),
+  ("+0200", "Europe/Kiev", '(GMT+0200) Kyiv'),
   ("+0200", "Europe/Minsk", '(GMT+0200) Minsk'),
   ("+0200", "Africa/Johannesburg", '(GMT+0200) Pretoria'),
   ("+0200", "Europe/Riga", '(GMT+0200) Riga'),
