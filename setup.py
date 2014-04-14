@@ -10,12 +10,12 @@ import os
 from setuptools import setup
 
 setup(name='timezones',
-      version = '1.6',
+      version = '1.7',
       author="amix",
       author_email="amix@amix.dk",
       url="http://www.amix.dk/",
       classifiers=[
-        "Development Status :: 4 - Beta",
+        "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
