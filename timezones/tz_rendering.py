@@ -26,7 +26,8 @@ def html_render_timezones(select_name,
                           user_ip=None,
                           first_entry='Select your timezone',
                           force_current_selected=False,
-                          select_id=None):
+                          select_id=None,
+                          default_timezone=None):
     """Render timezone and output HTML.
 
     `select_name`:
@@ -85,6 +86,10 @@ def html_render_timezones(select_name,
     # Guess user's timezone by user_ip
     if user_ip:
         gussed_timezone = tz_utils.guess_timezone_by_ip(user_ip)
+
+        if not gussed_timezone and default_timezone:
+            gussed_timezone = tz_utils.format_tz_by_name(default_timezone)
+
         if gussed_timezone:
             is_set = current_selected == gussed_timezone[1] or current_selected == None
             result.append( render_option(gussed_timezone[1],
