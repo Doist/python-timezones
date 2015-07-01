@@ -212,6 +212,7 @@ _ALL_TIMEZONES = [
   ("+1100", "Asia/Magadan", '(GMT+1100) Magadan'),
   ("+1100", "Pacific/Noumea", '(GMT+1100) New Caledonia'),
   ("+1100", "Pacific/Guadalcanal", '(GMT+1100) Solomon Is. '),
+  ("+1130", "Pacific/Norfolk", '(GMT+1130) Norfolk'),
   ("+1200", "Pacific/Auckland", '(GMT+1200) Auckland'),
   ("+1200", "Pacific/Fiji", '(GMT+1200) Fiji'),
   ("+1200", "Asia/Kamchatka", '(GMT+1200) Kamchatka'),
