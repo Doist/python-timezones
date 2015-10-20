@@ -36,8 +36,8 @@ def test_get_timezone():
 
 
 def test_guess_timezone():
-    tz_utils.GEOIP_DATA_LOCATION = '/usr/local/geo_ip/GeoLiteCity.dat'
-    assert tz_utils.guess_timezone_by_ip('201.246.115.62', only_name=True) == 'Chile/Continental'
+    tz_utils.GEOIP_DATA_LOCATION = '/usr/local/geo_ip/GeoIP2-City.mmdb'
+    assert tz_utils.guess_timezone_by_ip('201.246.115.62', only_name=True) == 'America/Santiago'
     assert tz_utils.guess_timezone_by_ip('000.000.000.000', only_name=True) == None
     assert tz_utils.guess_timezone_by_ip('127.0.0.1', only_name=True) == None
 

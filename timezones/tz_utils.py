@@ -11,9 +11,9 @@ Example usage (get a fixed offset timezone)::
     print tz_utils.get_timezone('GMT +10:00')
 
 
-Example usage (guess timezone by IP, required pygeoip!)::
+Example usage (guess timezone by IP, required geoip2!)::
 
-    tz_utils.GEOIP_DATA_LOCATION = '/usr/local/geo_ip/GeoLiteCity.dat'
+    tz_utils.GEOIP_DATA_LOCATION = '/usr/local/geo_ip/GeoIP2-City.mmdb'
     assert tz_utils.guess_timezone_by_ip('201.246.115.62') == 'Chile/Continental'
 
 
@@ -35,14 +35,13 @@ Example usage (is a timezone valid?)::
 :license: MIT
 """
 
-import os
 import pytz
 import re
 
 try:
-    import pygeoip
+    import geoip2.database as geoip2_db
 except:
-    pygeoip = None
+    geoip2_db = None
 
 from datetime import tzinfo, timedelta, datetime
 
@@ -59,7 +58,7 @@ GEOIP_DATA_LOCATION = None
 
 #--- Functions ----------------------------------------------
 def guess_timezone_by_ip(ip, only_name=False):
-    """Given an `ip` with guess timezone using pygeoip.
+    """Given an `ip` with guess timezone using geoip2.
     `None` is returned if it can't guess a timezone.
 
     For this to work you need to set tz_utils.GEOIP_DATA_LOCATION
@@ -75,12 +74,15 @@ def guess_timezone_by_ip(ip, only_name=False):
     geo_lib = _get_geoip_lib()
     if geo_lib:
         try:
-            record = geo_lib.record_by_addr(ip)
-            if record and record['time_zone']:
-                if only_name:
-                    return record['time_zone']
-                else:
-                    return format_tz_by_name(record['time_zone'])
+            record = geo_lib.city(ip)
+            if record:
+                location = record.location
+                if location:
+                    timezone = location.time_zone
+                    if only_name:
+                        return timezone
+                    else:
+                        return format_tz_by_name(timezone)
         except:
             record = None
     return None
@@ -203,7 +205,7 @@ def _get_geoip_lib():
     if not GEOIP_DATA_LOCATION:
         return None
 
-    GEO_IP = pygeoip.GeoIP(GEOIP_DATA_LOCATION, pygeoip.MEMORY_CACHE)
+    GEO_IP = geoip2_db.Reader(GEOIP_DATA_LOCATION)
 
     return GEO_IP
 
