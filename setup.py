@@ -8,7 +8,7 @@
 from setuptools import setup
 
 setup(name='timezones',
-      version = '1.8.2',
+      version = '1.9.0',
       author="amix",
       author_email="amix@amix.dk",
       url="http://www.amix.dk/",
@@ -22,7 +22,7 @@ setup(name='timezones',
       ],
       packages=['timezones'],
       install_requires=[
-        'pygeoip==0.2.5',
+        'geoip2',
         'pytz'
       ],
       platforms=["Any"],
