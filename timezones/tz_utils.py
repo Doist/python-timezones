@@ -205,7 +205,10 @@ def _get_geoip_lib():
     if not GEOIP_DATA_LOCATION:
         return None
 
-    GEO_IP = geoip2_db.Reader(GEOIP_DATA_LOCATION)
+    try:
+        GEO_IP = geoip2_db.Reader(GEOIP_DATA_LOCATION)
+    except:
+        return None
 
     return GEO_IP
 
