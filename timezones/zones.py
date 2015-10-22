@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 zones
 ~~~~~~~~
@@ -102,7 +101,7 @@ _ALL_TIMEZONES = [
   ("-0430", "America/Caracas", '(GMT-0430) Caracas'),
   ("-0400", "Canada/Atlantic", '(GMT-0400) Atlantic Time (Canada)'),
   ("-0400", "Etc/GMT+4", '(GMT-0400) La Paz'), # correct as well
-  ("-0400", "America/Cuiaba", '(GMT-0400) Cuiabá'),
+  ("-0400", "America/Cuiaba", '(GMT-0400) Cuiaba'),
   ("-0400", "America/Manaus", '(GMT-0400) Manaus'),
   ("-0300", "America/Santiago", '(GMT-0300) Santiago'),
   ("-0400", "America/Cuiaba", '(GMT-0400) Mato Grosso'),
@@ -111,7 +110,7 @@ _ALL_TIMEZONES = [
   ("-0400", "America/Guyana", '(GMT-0400) Georgetown'),
   ("-0300", "America/Godthab", '(GMT-0300) Greenland'),
   ("-0300", "America/Fortaleza", '(GMT-0300) NE Brazil, Fortaleza'),
-  ("-0300", "America/Sao_Paulo", '(GMT-0300) Brasília, São Paulo'),
+  ("-0300", "America/Sao_Paulo", '(GMT-0300) Brasilia, Sao Paulo'),
   ("-0200", "America/Noronha", '(GMT-0200) Fernando de Noronha'),
   ("-0100", "Atlantic/Azores", '(GMT-0100) Azores'),
   ("-0100", "Atlantic/Cape_Verde", '(GMT-0100) Cape Verde Is. '),
