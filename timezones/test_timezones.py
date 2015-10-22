@@ -86,3 +86,6 @@ def test_valid_offset(offset_str, tzname, verbose_name):
     expected_offset = '%s%02d%02d' % (offset_sign, offset_hours, offset_minutes)
     assert offset_str == expected_offset
 
+    # 3. Test verbose name
+    assert verbose_name.startswith("(GMT%s) " % expected_offset)
+
