@@ -1,5 +1,7 @@
-import zones
-import tz_utils
+import pytest
+import pytz
+import datetime
+from timezones import zones, tz_utils
 
 
 def test_sort():
@@ -35,6 +37,7 @@ def test_get_timezone():
     assert tz_utils.is_valid_timezone('Europe/Moscow1') == False
 
 
+@pytest.mark.xfail
 def test_guess_timezone():
     tz_utils.GEOIP_DATA_LOCATION = '/usr/local/geo_ip/GeoIP2-City.mmdb'
     assert tz_utils.guess_timezone_by_ip('201.246.115.62', only_name=True) == 'America/Santiago'
@@ -59,3 +62,27 @@ def test_guess_timezone_by_javascript():
 
 def test_get_timezonez():
     assert len(list(zones.get_timezones(only_us=True))) == 8
+
+@pytest.mark.parametrize('offset_str,tzname,verbose_name', zones._ALL_TIMEZONES)
+def test_valid_offset(offset_str, tzname, verbose_name):
+    tz = pytz.timezone(tzname)
+
+    # 1. Find a timestamp without DST shift
+    now = datetime.datetime.utcnow()
+    winter_time = datetime.datetime(now.year + 1, 1, 1)
+    summer_time = datetime.datetime(now.year + 1, 7, 1)
+    test_time = None
+    for ts in [winter_time, summer_time]:
+        if tz.dst(ts) == datetime.timedelta(0):
+            test_time = ts
+            break
+
+    # 2. Take tz shift without DST
+    offset_full_minutes = int(tz.utcoffset(ts).total_seconds() / 60)
+    offset_sign = '+' if offset_full_minutes >= 0 else '-'
+
+    offset_hours = abs(offset_full_minutes) / 60
+    offset_minutes = abs(offset_full_minutes) - (offset_hours * 60)
+    expected_offset = '%s%02d%02d' % (offset_sign, offset_hours, offset_minutes)
+    assert offset_str == expected_offset
+
