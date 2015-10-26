@@ -18,8 +18,8 @@ Example usage (returns HTML based on current properties)::
 :license: MIT
 """
 
-import tz_utils
-import zones
+from . import tz_utils, zones
+
 
 def html_render_timezones(select_name,
                           current_selected=None,
@@ -76,7 +76,7 @@ def html_render_timezones(select_name,
         result.append(render_option_disabled())
 
     if force_current_selected and current_selected:
-        timezone = tz_utils.format_tz_by_name(current_selected)
+        timezone = format_tz(current_selected)
         if timezone:
             result.append( render_option(timezone[1],
                                          timezone[2],
@@ -88,7 +88,7 @@ def html_render_timezones(select_name,
         gussed_timezone = tz_utils.guess_timezone_by_ip(user_ip)
 
         if not gussed_timezone and default_timezone:
-            gussed_timezone = tz_utils.format_tz_by_name(default_timezone)
+            gussed_timezone = format_tz(default_timezone)
 
         if gussed_timezone:
             is_set = current_selected == gussed_timezone[1] or current_selected == None
@@ -113,3 +113,10 @@ def html_render_timezones(select_name,
     result.append('</select>')
 
     return '\n'.join(result)
+
+
+def format_tz(tz_name):
+    tz = zones.get_timezones_dict().get(tz_name)
+    if tz:
+        return tz
+    return tz_utils.format_tz_by_name(tz_name)

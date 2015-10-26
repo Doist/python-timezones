@@ -25,7 +25,7 @@ import types
 import re
 import pytz
 
-import tz_utils
+from . import tz_utils
 
 
 # Set to true if the timezone data is synced with pytz
@@ -59,6 +59,13 @@ def get_timezones(only_us=False,
     else:
         for tz in _ALL_TIMEZONES:
             yield tz
+
+
+def get_timezones_dict():
+    global _ALL_TIMEZONES_DICT
+    if _ALL_TIMEZONES_DICT is None:
+        _ALL_TIMEZONES_DICT = {tz[1]: tz for tz in get_timezones()}
+    return _ALL_TIMEZONES_DICT
 
 
 #--- Definitions ----------------------------------------------
@@ -255,6 +262,7 @@ _FIXED_OFFSETS = [
         ("+1300", "GMT +13:00", "GMT +13:00")
 ]
 
+_ALL_TIMEZONES_DICT = None
 
 #--- Private ----------------------------------------------
 def _sort_by_tzoffset(a_offset, b_offset):
