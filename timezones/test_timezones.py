@@ -1,7 +1,7 @@
 import pytest
 import pytz
 import datetime
-from timezones import zones, tz_utils
+from timezones import zones, tz_utils, tz_rendering
 
 
 def test_sort():
@@ -71,10 +71,8 @@ def test_valid_offset(offset_str, tzname, verbose_name):
     now = datetime.datetime.utcnow()
     winter_time = datetime.datetime(now.year + 1, 1, 1)
     summer_time = datetime.datetime(now.year + 1, 7, 1)
-    test_time = None
     for ts in [winter_time, summer_time]:
         if tz.dst(ts) == datetime.timedelta(0):
-            test_time = ts
             break
 
     # 2. Take tz shift without DST
@@ -89,3 +87,6 @@ def test_valid_offset(offset_str, tzname, verbose_name):
     # 3. Test verbose name
     assert verbose_name.startswith("(GMT%s) " % expected_offset)
 
+def test_get_timezones_json():
+    json_list = tz_rendering.get_timezones_json()
+    assert 'US/' in json_list

@@ -17,6 +17,7 @@ Example usage (returns HTML based on current properties)::
 :copyright: 2012 by Amir Salihefendic ( http://amix.dk/ )
 :license: MIT
 """
+import json
 
 from . import tz_utils, zones
 
@@ -113,6 +114,20 @@ def html_render_timezones(select_name,
     result.append('</select>')
 
     return '\n'.join(result)
+
+
+def get_timezones_json():
+    result = []
+    for tz in zones.get_timezones(only_us=True):
+        result.append((tz[1], tz[2]))
+
+    for tz in zones.get_timezones():
+        result.append((tz[1], tz[2]))
+
+    for tz in zones.get_timezones(only_fixed=True):
+        result.append((tz[1], tz[2]))
+
+    return json.dumps(result)
 
 
 def format_tz(tz_name):
