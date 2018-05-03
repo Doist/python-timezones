@@ -233,9 +233,9 @@ _ALL_TIMEZONES = [
   ("+1200", "Pacific/Auckland", '(GMT+1200) Auckland'),
   ("+1200", "Pacific/Fiji", '(GMT+1200) Fiji'),
   ("+1200", "Asia/Kamchatka", '(GMT+1200) Kamchatka'),
-  ("+1200", "Asia/Kamchatka", '(GMT+1200) Marshall Is. '),
+  ("+1200", "Asia/Kamchatka", '(GMT+1200) Marshall Is.'),
   ("+1200", "Pacific/Auckland", '(GMT+1200) Wellington'),
-  ("+1300", "Pacific/Tongatapu", "(GMT+1300) Nuku'alofa)")
+  ("+1300", "Pacific/Tongatapu", "(GMT+1300) Nuku'alofa")
 ]
 
 
