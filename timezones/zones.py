@@ -179,11 +179,18 @@ _ALL_TIMEZONES = [
   ("+0500", "Asia/Karachi", '(GMT+0500) Islamabad'),
   ("+0500", "Asia/Karachi", '(GMT+0500) Karachi'),
   ("+0500", "Asia/Tashkent", '(GMT+0500) Tashkent'),
+
+  # Note that different locations match the same timezone name
+  # and the location which gives the name to the timezone
+  # comes last. It's to ensure that the function
+  # html_render_timezones(..., current_selected='Asia/Calcutta')
+  # takes "most sensible" timezone name.
   ("+0530", "Asia/Calcutta", '(GMT+0530) Chennai'),
-  ("+0530", "Asia/Calcutta", '(GMT+0530) Kolkata'),
   ("+0530", "Asia/Calcutta", '(GMT+0530) Mumbai'),
   ("+0530", "Asia/Calcutta", '(GMT+0530) New Delhi'),
   ("+0530", "Asia/Calcutta", '(GMT+0530) Sri Jayawardenepura'),
+  ("+0530", "Asia/Calcutta", '(GMT+0530) Kolkata'),
+
   ("+0545", "Asia/Kathmandu", '(GMT+0545) Kathmandu'),
   ("+0600", "Asia/Almaty", '(GMT+0600) Almaty'),
   ("+0600", "Asia/Qyzylorda", '(GMT+0600) Astana'),
@@ -226,9 +233,9 @@ _ALL_TIMEZONES = [
   ("+1200", "Pacific/Auckland", '(GMT+1200) Auckland'),
   ("+1200", "Pacific/Fiji", '(GMT+1200) Fiji'),
   ("+1200", "Asia/Kamchatka", '(GMT+1200) Kamchatka'),
-  ("+1200", "Asia/Kamchatka", '(GMT+1200) Marshall Is. '),
+  ("+1200", "Asia/Kamchatka", '(GMT+1200) Marshall Is.'),
   ("+1200", "Pacific/Auckland", '(GMT+1200) Wellington'),
-  ("+1300", "Pacific/Tongatapu", "(GMT+1300) Nuku'alofa)")
+  ("+1300", "Pacific/Tongatapu", "(GMT+1300) Nuku'alofa")
 ]
 
 
