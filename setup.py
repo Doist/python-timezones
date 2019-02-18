@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(name='timezones',
-      version = '1.9.9',
+      version = '1.9.10',
       author="amix",
       author_email="amix@amix.dk",
       url="http://www.amix.dk/",
