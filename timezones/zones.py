@@ -193,7 +193,7 @@ _ALL_TIMEZONES = [
 
   ("+0545", "Asia/Kathmandu", '(GMT+0545) Kathmandu'),
   ("+0600", "Asia/Almaty", '(GMT+0600) Almaty'),
-  ("+0600", "Asia/Qyzylorda", '(GMT+0600) Astana'),
+  ("+0600", "Asia/Almaty", '(GMT+0600) Astana'),
   ("+0600", "Asia/Dhaka", '(GMT+0600) Dhaka'),
   ("+0600", "Asia/Novosibirsk", '(GMT+0600) Novosibirsk'),
   ("+0630", "Asia/Rangoon", '(GMT+0630) Rangoon'),
