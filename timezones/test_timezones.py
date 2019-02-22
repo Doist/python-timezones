@@ -37,7 +37,7 @@ def test_get_timezone():
     assert tz_utils.is_valid_timezone('Europe/Moscow1') == False
 
 
-@pytest.mark.xfail
+@pytest.mark.skip('Requires installed GeoIP2 database')
 def test_guess_timezone():
     tz_utils.GEOIP_DATA_LOCATION = '/usr/local/geo_ip/GeoIP2-City.mmdb'
     assert tz_utils.guess_timezone_by_ip('201.246.115.62', only_name=True) == 'America/Santiago'
@@ -60,6 +60,8 @@ def test_valid_offset(offset_str, tzname, verbose_name):
     now = datetime.datetime.utcnow()
     winter_time = datetime.datetime(now.year + 1, 1, 1)
     summer_time = datetime.datetime(now.year + 1, 7, 1)
+
+    # Looking for a timestamp with zero DST offset
     for ts in [winter_time, summer_time]:
         if tz.dst(ts) == datetime.timedelta(0):
             break
@@ -68,13 +70,14 @@ def test_valid_offset(offset_str, tzname, verbose_name):
     offset_full_minutes = int(tz.utcoffset(ts).total_seconds() / 60)
     offset_sign = '+' if offset_full_minutes >= 0 else '-'
 
-    offset_hours = abs(offset_full_minutes) / 60
+    offset_hours = abs(offset_full_minutes) // 60
     offset_minutes = abs(offset_full_minutes) - (offset_hours * 60)
     expected_offset = '%s%02d%02d' % (offset_sign, offset_hours, offset_minutes)
-    assert offset_str == expected_offset
+    assert offset_str == expected_offset, 'Invalid offset for {}'.format(tzname)
 
     # 3. Test verbose name
     assert verbose_name.startswith("(GMT%s) " % expected_offset)
+
 
 def test_get_timezones_json():
     json_list = tz_rendering.get_timezones_json()

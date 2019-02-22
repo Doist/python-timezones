@@ -18,7 +18,8 @@ setup(name='timezones',
       packages=['timezones'],
       install_requires=[
         'geoip2',
-        'pytz'
+        'pytz',
+        'future',
       ],
       platforms=["Any"],
       license="MIT",

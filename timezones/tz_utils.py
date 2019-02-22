@@ -34,16 +34,16 @@ Example usage (is a timezone valid?)::
 :copyright: 2012 by Amir Salihefendic ( http://amix.dk/ )
 :license: MIT
 """
+import re
+from datetime import datetime, timedelta, tzinfo
 
 import pytz
-import re
 
 try:
     import geoip2.database as geoip2_db
 except:
     geoip2_db = None
 
-from datetime import tzinfo, timedelta, datetime
 
 
 #--- Exports ----------------------------------------------
@@ -123,7 +123,7 @@ def format_tz_by_name(tz_name, tz_formated=None):
     offset = now.strftime("%z")
 
     if tz_formated:
-        tz_formated = re.sub('\(GMT.+?\)', '(GMT%s)' % offset, tz_formated)
+        tz_formated = re.sub(r'\(GMT.+?\)', '(GMT%s)' % offset, tz_formated)
     else:
         tz_formated = '(GMT%s) %s' % (offset, tz_name)
 

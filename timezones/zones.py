@@ -9,7 +9,7 @@ It also supports fixed timezones such as `GMT +7:00`.
 Example usage (returns US based timezones)::
 
     for tz_offset, tz_name, tz_formated in zones.get_timezones(only_us=True):
-        print tz_formated
+        print(tz_formated)
 
         =>
 
@@ -21,15 +21,15 @@ Example usage (returns US based timezones)::
 :copyright: 2012 by Amir Salihefendic ( http://amix.dk/ )
 :license: MIT
 """
-import types
 import re
-import pytz
 
-from . import tz_utils
+from future.backports import cmp_to_key
+from past.builtins import cmp
 
+from timezones import tz_utils
 
-# Set to true if the timezone data is synced with pytz
 _UPDATED_TZS = False
+
 
 def get_timezones(only_us=False,
                   only_fixed=False):
@@ -271,15 +271,15 @@ _FIXED_OFFSETS = [
 
 _ALL_TIMEZONES_DICT = None
 
-#--- Private ----------------------------------------------
+
 def _sort_by_tzoffset(a_offset, b_offset):
-    #Transform if it's a tuple
-    if type(a_offset) == types.TupleType:
+    # Transform if it's a tuple
+    if isinstance(a_offset, tuple):
         a_offset = a_offset[0]
         b_offset = b_offset[0]
 
     def split(offset):
-        match = re.match('([+-])(\d\d)(\d\d)', offset)
+        match = re.match(r'([+-])(\d\d)(\d\d)', offset)
         return match.group(1) == '-', int(match.group(2)), int(match.group(3))
 
     a_negative, a_hours, a_minutes = split(a_offset)
@@ -310,6 +310,6 @@ def _update_offests(timezone_collection):
     new_collection = []
 
     for tz_offset, name, tz_formated in timezone_collection:
-        new_collection.append( tz_utils.format_tz_by_name(name, tz_formated) )
+        new_collection.append(tz_utils.format_tz_by_name(name, tz_formated))
 
-    return sorted(new_collection, _sort_by_tzoffset)
+    return sorted(new_collection, key=cmp_to_key(_sort_by_tzoffset))
