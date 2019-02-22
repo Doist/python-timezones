@@ -28,31 +28,35 @@ def test_sort():
 
 
 def test_get_timezone():
-    assert tz_utils.get_timezone('Europe/Moscow') != None
-    assert tz_utils.get_timezone('Europe/Moscow1') == None
-    assert tz_utils.get_timezone('GMT +1:00') != None
+    assert tz_utils.get_timezone('Europe/Moscow') is not None
+    assert tz_utils.get_timezone('Europe/Moscow1') is None
+    assert tz_utils.get_timezone('GMT +1:00') is not None
 
-    assert tz_utils.is_valid_timezone('GMT +1:00') == True
-    assert tz_utils.is_valid_timezone('Europe/Moscow') == True
-    assert tz_utils.is_valid_timezone('Europe/Moscow1') == False
+    assert tz_utils.is_valid_timezone('GMT +1:00')
+    assert tz_utils.is_valid_timezone('Europe/Moscow')
+    assert tz_utils.is_valid_timezone('Europe/Moscow1') is False
 
 
 @pytest.mark.skip('Requires installed GeoIP2 database')
 def test_guess_timezone():
     tz_utils.GEOIP_DATA_LOCATION = '/usr/local/geo_ip/GeoIP2-City.mmdb'
-    assert tz_utils.guess_timezone_by_ip('201.246.115.62', only_name=True) == 'America/Santiago'
-    assert tz_utils.guess_timezone_by_ip('000.000.000.000', only_name=True) == None
-    assert tz_utils.guess_timezone_by_ip('127.0.0.1', only_name=True) == None
+    assert tz_utils.guess_timezone_by_ip(
+        '201.246.115.62', only_name=True) == 'America/Santiago'
+    assert tz_utils.guess_timezone_by_ip(
+        '000.000.000.000', only_name=True) is None
+    assert tz_utils.guess_timezone_by_ip('127.0.0.1', only_name=True) is None
 
     tz_utils.GEOIP_DATA_LOCATION = '/usr/local/geo_ip/NotFound.mmdb'
-    assert tz_utils.guess_timezone_by_ip('201.246.115.62', only_name=True) == None
+    assert tz_utils.guess_timezone_by_ip(
+        '201.246.115.62', only_name=True) is None
 
 
 def test_get_timezonez():
     assert len(list(zones.get_timezones(only_us=True))) == 8
 
 
-@pytest.mark.parametrize('offset_str,tzname,verbose_name', zones._ALL_TIMEZONES)
+@pytest.mark.parametrize('offset_str,tzname,verbose_name',
+                         zones._ALL_TIMEZONES)
 def test_valid_offset(offset_str, tzname, verbose_name):
     tz = pytz.timezone(tzname)
 
@@ -72,8 +76,10 @@ def test_valid_offset(offset_str, tzname, verbose_name):
 
     offset_hours = abs(offset_full_minutes) // 60
     offset_minutes = abs(offset_full_minutes) - (offset_hours * 60)
-    expected_offset = '%s%02d%02d' % (offset_sign, offset_hours, offset_minutes)
-    assert offset_str == expected_offset, 'Invalid offset for {}'.format(tzname)
+    expected_offset = '%s%02d%02d' % (offset_sign, offset_hours,
+                                      offset_minutes)
+    assert offset_str == expected_offset, 'Invalid offset for {}'.format(
+        tzname)
 
     # 3. Test verbose name
     assert verbose_name.startswith("(GMT%s) " % expected_offset)
