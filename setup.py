@@ -3,10 +3,10 @@
 from setuptools import setup
 
 setup(name='timezones',
-      version = '1.9.10',
-      author="amix",
-      author_email="amix@amix.dk",
-      url="http://www.amix.dk/",
+      version='2.0',
+      author="Doist Developers",
+      author_email="dev@doist.com",
+      url="https://doist.com",
       classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Intended Audience :: Developers",
@@ -34,5 +34,5 @@ can output HTML and auto select the best timezone based on user's IP.
 
 Visit http://doist.github.com/python-timezones/ for more information.
 
-Copyright: 2012-2018 by Doist
+Copyright: 2012-2019 by Doist
 License: MIT.""")
