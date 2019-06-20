@@ -25,7 +25,6 @@ import re
 
 from future.backports import cmp_to_key
 from past.builtins import cmp
-
 from timezones import tz_utils
 
 _UPDATED_TZS = False
@@ -91,6 +90,7 @@ _ALL_TIMEZONES = [
     ("-0700", "America/Chihuahua", '(GMT-0700) Chihuahua'),
     ("-0700", "America/Mazatlan", '(GMT-0700) Mazatlan'),
     ("-0700", "US/Mountain", '(GMT-0700) Mountain Time (US & Canada)'),
+    ("-0600", "US/Central", '(GMT-0600) Central Time (US & Canada)'),
     ("-0600", "Canada/Central", '(GMT-0600) Central America'),
     ("-0600", "Canada/Central", '(GMT-0600) Central Time (US & Canada)'),
     ("-0600", "Mexico/General", '(GMT-0600) Guadalajara'),
