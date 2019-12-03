@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='timezones',
-    version='2.0.4',
+    version='2.0.5',
     author="Doist Developers",
     author_email="dev@doist.com",
     url="https://doist.com",
