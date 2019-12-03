@@ -144,7 +144,6 @@ _ALL_TIMEZONES = [
     ("+0100", "Europe/Stockholm", '(GMT+0100) Stockholm'),
     ("+0100", "Europe/Vienna", '(GMT+0100) Vienna'),
     ("+0100", "Europe/Warsaw", '(GMT+0100) Warsaw'),
-    ("+0100", "Europe/Copenhagen", '(GMT+0100) West Central Africa'),
     ("+0100", "Europe/Zagreb", '(GMT+0100) Zagreb'),
     ("+0200", "Europe/Athens", '(GMT+0200) Athens'),
     ("+0200", "Europe/Bucharest", '(GMT+0200) Bucharest'),
