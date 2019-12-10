@@ -57,6 +57,7 @@ GEOIP_DATA_LOCATION = None
 # --- Functions ----------------------------------------------
 def guess_timezone_by_ip(ip, only_name=False):
     """Given an `ip` with guess timezone using geoip2.
+    Returns a tuple of (tz_offets, tz_name, tz_formated).
     `None` is returned if it can't guess a timezone.
 
     For this to work you need to set tz_utils.GEOIP_DATA_LOCATION
@@ -75,12 +76,11 @@ def guess_timezone_by_ip(ip, only_name=False):
             record = geo_lib.city(ip)
             if record:
                 location = record.location
-                if location:
-                    timezone = location.time_zone
+                if location and location.time_zone:
                     if only_name:
-                        return timezone
+                        return location.timezone
                     else:
-                        return format_tz_by_name(timezone)
+                        return format_tz_by_name(location.timezone)
         except:
             record = None
     return None
