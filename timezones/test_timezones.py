@@ -40,6 +40,7 @@ def test_get_timezone():
 @pytest.mark.skip('Requires installed GeoIP2 database')
 def test_guess_timezone():
     tz_utils.GEOIP_DATA_LOCATION = '/usr/local/geo_ip/GeoIP2-City.mmdb'
+    assert not tz_utils.guess_timezone_by_ip('70.132.4.78')
     assert tz_utils.guess_timezone_by_ip(
         '201.246.115.62', only_name=True) == 'America/Santiago'
     assert tz_utils.guess_timezone_by_ip(
