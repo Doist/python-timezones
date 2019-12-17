@@ -36,6 +36,8 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     packages=["timezones"],
+    use_scm_version=True,
+    setup_requires=["setuptools_scm"],
     install_requires=["geoip2", "pytz", "future"],
     platforms=["Any"],
     license="MIT",
