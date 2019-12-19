@@ -41,8 +41,9 @@ import pytz
 
 try:
     import geoip2.database as geoip2_db
+    HAS_GEOIP2 = True
 except ImportError:
-    geoip2_db = None
+    HAS_GEOIP2 = False
 
 # --- Exports ----------------------------------------------
 __all__ = [
@@ -135,7 +136,7 @@ GEO_IP = None
 def _get_geoip_lib():
     global GEO_IP
 
-    if not GEOIP_DATA_LOCATION:
+    if not HAS_GEOIP2 or not GEOIP_DATA_LOCATION:
         return None
 
     try:
