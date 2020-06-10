@@ -40,7 +40,6 @@ def test_get_timezone():
     assert tz_utils.is_valid_timezone('Europe/Moscow1') is False
 
 
-@pytest.mark.skip('Requires installed GeoIP2 database')
 def no_geolib():
     return not os.path.exists(GEOIP_DATA_LOCATION)
 
