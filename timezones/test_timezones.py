@@ -1,7 +1,10 @@
+import os
 import pytest
 import pytz
 import datetime
 from timezones import zones, tz_utils, tz_rendering
+
+GEOIP_DATA_LOCATION = '/usr/local/geo_ip/GeoIP2-City.mmdb'
 
 
 def test_sort():
@@ -37,9 +40,13 @@ def test_get_timezone():
     assert tz_utils.is_valid_timezone('Europe/Moscow1') is False
 
 
-@pytest.mark.skip('Requires installed GeoIP2 database')
+def no_geolib():
+    return not os.path.exists(GEOIP_DATA_LOCATION)
+
+
+@pytest.mark.skipif(no_geolib() is True, reason='Requires GeoIP2 database')
 def test_guess_timezone():
-    tz_utils.GEOIP_DATA_LOCATION = '/usr/local/geo_ip/GeoIP2-City.mmdb'
+    tz_utils.GEOIP_DATA_LOCATION = GEOIP_DATA_LOCATION
     assert not tz_utils.guess_timezone_by_ip('70.132.4.78')
     assert tz_utils.guess_timezone_by_ip(
         '201.246.115.62', only_name=True) == 'America/Santiago'

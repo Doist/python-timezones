@@ -79,9 +79,9 @@ def guess_timezone_by_ip(ip, only_name=False):
                 location = record.location
                 if location and location.time_zone:
                     if only_name:
-                        return location.timezone
+                        return location.time_zone
                     else:
-                        return format_tz_by_name(location.timezone)
+                        return format_tz_by_name(location.time_zone)
         except:
             record = None
     return None
