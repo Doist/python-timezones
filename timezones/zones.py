@@ -25,6 +25,7 @@ import re
 
 from future.backports import cmp_to_key
 from past.builtins import cmp
+
 from timezones import tz_utils
 
 _UPDATED_TZS = False
@@ -205,8 +206,8 @@ _ALL_TIMEZONES = [
     ("+0800", "Asia/Kuala_Lumpur", '(GMT+0800) Kuala Lumpur'),
     ("+0800", "Australia/Perth", '(GMT+0800) Perth'),
     ("+0800", "Singapore", '(GMT+0800) Singapore'),
-    ("+0800", "Asia/Taipei", '(GMT+0800) Taipei'),
     ("+0800", "Asia/Taipei", '(GMT+0800) Ulaan Bataar'),
+    ("+0800", "Asia/Taipei", '(GMT+0800) Taipei'),
     ("+0900", "Asia/Seoul", '(GMT+0900) Seoul'),
     ("+0900", "Asia/Tokyo", '(GMT+0900) Tokyo'),
     ("+0900", "Asia/Yakutsk", '(GMT+0900) Yakutsk'),
