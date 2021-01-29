@@ -166,7 +166,7 @@ _ALL_TIMEZONES = [
     ("+0300", "Africa/Nairobi", '(GMT+0300) Nairobi'),
     ("+0300", "Asia/Riyadh", '(GMT+0300) Riyadh'),
     ("+0300", "Europe/Moscow", '(GMT+0300) St. Petersburg'),
-    ("+0400", "Europe/Volgograd", '(GMT+0300) Volgograd'),
+    ("+0300", "Europe/Volgograd", '(GMT+0300) Volgograd'),
     ("+0330", "Asia/Tehran", '(GMT+0330) Tehran'),
     ("+0400", "Asia/Dubai", '(GMT+0400) Abu Dhabi'),
     ("+0400", "Asia/Baku", '(GMT+0400) Baku'),
