@@ -137,6 +137,7 @@ _ALL_TIMEZONES = [
     ("+0100", "Europe/Copenhagen", '(GMT+0100) Copenhagen'),
     ("+0100", "Europe/Ljubljana", '(GMT+0100) Ljubljana'),
     ("+0100", "Europe/Madrid", '(GMT+0100) Madrid'),
+    ("+0100", "Europe/Oslo", '(GMT+0100) Oslo'),
     ("+0100", "Europe/Paris", '(GMT+0100) Paris'),
     ("+0100", "Europe/Prague", '(GMT+0100) Prague'),
     ("+0100", "Europe/Rome", '(GMT+0100) Rome'),
