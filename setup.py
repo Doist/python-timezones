@@ -38,7 +38,7 @@ setup(
     ],
     packages=["timezones"],
     use_scm_version=True,
-    setup_requires=["setuptools_scm==5.0.2"],
+    setup_requires=["setuptools_scm"],
     install_requires=["geoip2", "pytz", "future"],
     platforms=["Any"],
     license="MIT",
