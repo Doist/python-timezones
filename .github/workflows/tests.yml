@@ -20,7 +20,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install setuptools-scm==5.0.2
-        mypy --install-types
         pip install tox tox-gh-actions
     - name: Test with tox
       run: tox
