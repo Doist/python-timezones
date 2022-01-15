@@ -10,6 +10,7 @@ jobs:
       matrix:
         python-version: [2.7, 3.5, 3.6, 3.7, 3.8]
 
+    timeout-minutes: 60
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
