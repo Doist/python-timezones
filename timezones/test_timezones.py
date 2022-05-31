@@ -6,28 +6,23 @@ from timezones import zones, tz_utils, tz_rendering
 
 GEOIP_DATA_LOCATION = '/usr/local/geo_ip/GeoIP2-City.mmdb'
 
+def assert_is_lower(offset_a, offset_b):
+    # Force a real sort to happen
+    coll = ["+9999", offset_b, offset_a, "-9999"]
+    coll.sort(key=zones._tz_offset_key)
+    assert coll[1] == offset_a
 
 def test_sort():
-    # +04:00 is bigger than +04:30
-    assert zones._sort_by_tzoffset('+0400', '+0430') == -1
+    assert_is_lower("+0100", "+0400")
+    assert_is_lower("+0400", "+0430")
+    assert_is_lower("+0430", "+0500")
 
-    # +04:00 equal to +04:00
-    assert zones._sort_by_tzoffset('+0400', '+0400') == 0
+    assert_is_lower("-1000", "+0430")
+    assert_is_lower("-1030", "-0500")
 
-    # +05:00 is bigger to +04:30
-    assert zones._sort_by_tzoffset('+0500', '+0430') == 1
+    assert_is_lower("-1030", "+0000")
 
-    # +01:00 is smaller than +04:00
-    assert zones._sort_by_tzoffset('+0100', '+0400') == -1
-
-    # -10:00 is smaller than +04:30
-    assert zones._sort_by_tzoffset('-1000', '+0430') == -1
-
-    # -05:00 is bigger than -10:00
-    assert zones._sort_by_tzoffset('-0500', '-1030') == 1
-
-    # 00:00 is bigger than -10:00
-    assert zones._sort_by_tzoffset('+0000', '-1030') == 1
+    assert_is_lower("-0030", "+0030")
 
 
 def test_get_timezone():

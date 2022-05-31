@@ -23,12 +23,11 @@ Example usage (returns US based timezones)::
 """
 import re
 
-from future.backports import cmp_to_key
-from past.builtins import cmp
-
 from timezones import tz_utils
 
 _UPDATED_TZS = False
+
+_RE_TZ_OFFSET = re.compile(r"([+-])(\d\d)(\d\d)")
 
 
 def get_timezones(only_us=False, only_fixed=False):
@@ -269,38 +268,29 @@ _FIXED_OFFSETS = [
 _ALL_TIMEZONES_DICT = None
 
 
-def _sort_by_tzoffset(a_offset, b_offset):
-    # Transform if it's a tuple
-    if isinstance(a_offset, tuple):
-        a_offset = a_offset[0]
-        b_offset = b_offset[0]
+def _tz_offset_key(offset):
+    # Convert a tz offset to a key that can be used by sort().
+    # Since Python can sort tuples in lexicographical order, we just convert it
+    # to a tuple.
+    if isinstance(offset, tuple):
+        offset = offset[0]
 
-    def split(offset):
-        match = re.match(r'([+-])(\d\d)(\d\d)', offset)
-        return match.group(1) == '-', int(match.group(2)), int(match.group(3))
+    mtch = _RE_TZ_OFFSET.match(offset)
+    is_negative, hours, minutes = (
+        mtch.group(1) == "-",
+        int(mtch.group(2)),
+        int(mtch.group(3)),
+    )
 
-    a_negative, a_hours, a_minutes = split(a_offset)
-    b_negative, b_hours, b_minutes = split(b_offset)
+    if is_negative:
+        if hours == 0 and minutes == 0:
+            return (0, 0)
 
-    if a_hours == 0 and b_hours != 0:
-        return 1
+        # If we just set hours to -hours, "+0030" and "-0030" will both evaluate
+        # to (0, 30). To force the negative version to be lower, we subtract 1.
+        hours = -hours - 1
 
-    if a_negative and not b_negative:
-        return -1
-
-    if not a_negative and b_negative:
-        return 1
-
-    if a_negative and b_negative:
-        a_hours = -1 * a_hours
-        b_hours = -1 * b_hours
-
-    if a_hours > b_hours:
-        return 1
-    elif a_hours == b_hours:
-        return cmp(a_minutes, b_minutes)
-    else:
-        return -1
+    return (hours, minutes)
 
 
 def _update_offsets(timezone_collection):
@@ -309,4 +299,4 @@ def _update_offsets(timezone_collection):
     for tz_offset, name, tz_formated in timezone_collection:
         new_collection.append(tz_utils.format_tz_by_name(name, tz_formated))
 
-    return sorted(new_collection, key=cmp_to_key(_sort_by_tzoffset))
+    return sorted(new_collection, key=_tz_offset_key)

@@ -24,7 +24,6 @@ readme = "README.md"
 python = "^3.8"
 geoip2 = "^4.5.0"
 pytz = "*"
-future = "^0.18.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
