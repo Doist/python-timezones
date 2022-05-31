@@ -45,8 +45,8 @@ def get_timezones(only_us=False, only_fixed=False):
     # We need to update the offsets to ensure they are correct
     # with pytz latest info
     if not _UPDATED_TZS:
-        _US_TIMEZONES = _update_offests(_US_TIMEZONES)
-        _ALL_TIMEZONES = _update_offests(_ALL_TIMEZONES)
+        _US_TIMEZONES = _update_offsets(_US_TIMEZONES)
+        _ALL_TIMEZONES = _update_offsets(_ALL_TIMEZONES)
         _UPDATED_TZS = True
 
     if only_us:
@@ -303,7 +303,7 @@ def _sort_by_tzoffset(a_offset, b_offset):
         return -1
 
 
-def _update_offests(timezone_collection):
+def _update_offsets(timezone_collection):
     new_collection = []
 
     for tz_offset, name, tz_formated in timezone_collection:
