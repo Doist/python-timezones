@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "timezones"
+version = "2.0.9"
+description = "A Python library that provides better selection of common timezones, can output HTML and auto select the best timezone based on user's IP."
+license = "MIT"
+keywords = ["timezones", "timezone", "pytz"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+homepage = "https://doist.com"
+authors = ["Doist Developers <dev@doist.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+geoip2 = "^4.5.0"
+pytz = "*"
+future = "^0.18.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

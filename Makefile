@@ -1,4 +1,4 @@
-VERSION := $(shell python timezones/__version__.py)
+VERSION := $(shell poetry version --short)
 
 help:
 	@echo "Usage: 'make clean' or 'make build' or 'make tag' or 'make upload'"
@@ -9,7 +9,7 @@ clean:
 
 
 build: clean
-	python setup.py sdist bdist_wheel --universal
+	poetry build
 
 
 tag:
@@ -21,6 +21,6 @@ tag:
 
 
 upload: tag build
-	twine upload dist/*
+	poetry publish
 
 .PHONY: help clean build tag upload
