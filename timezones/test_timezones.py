@@ -8,8 +8,10 @@ GEOIP_DATA_LOCATION = "/usr/local/geo_ip/GeoIP2-City.mmdb"
 
 
 def assert_is_lower(offset_a, offset_b):
-    # Force a real sort to happen
-    coll = ["+9999", offset_b, offset_a, "-9999"]
+    # Force a real sort to happen: to avoid optimizations from kicking in, make
+    # sure the list is really out of the expected order, and not in reverse
+    # order either.
+    coll = ["+9999", offset_b, "-9999", offset_a]
     coll.sort(key=zones._tz_offset_key)
     assert coll[1] == offset_a
 
