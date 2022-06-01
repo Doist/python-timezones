@@ -282,12 +282,7 @@ def _tz_offset_key(offset):
     )
 
     if is_negative:
-        if hours == 0 and minutes == 0:
-            return (0, 0)
-
-        # If we just set hours to -hours, "+0030" and "-0030" will both evaluate
-        # to (0, 30). To force the negative version to be lower, we subtract 1.
-        hours = -hours - 1
+        hours, minutes = -hours, -minutes
 
     return (hours, minutes)
 

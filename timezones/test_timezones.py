@@ -28,6 +28,9 @@ def test_sort():
 
     assert_is_lower("-0030", "+0030")
 
+    assert_is_lower("-0045", "-0030")
+    assert_is_lower("+0030", "+0045")
+
 
 def test_get_timezone():
     assert tz_utils.get_timezone("Europe/Moscow") is not None
