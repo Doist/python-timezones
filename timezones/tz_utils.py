@@ -41,14 +41,18 @@ import pytz
 
 try:
     import geoip2.database as geoip2_db
+
     HAS_GEOIP2 = True
 except ImportError:
     HAS_GEOIP2 = False
 
 # --- Exports ----------------------------------------------
 __all__ = [
-    'get_timezone', 'is_valid_timezone', 'GEOIP_DATA_LOCATION',
-    'guess_timezone_by_ip', 'format_tz_by_name'
+    "get_timezone",
+    "is_valid_timezone",
+    "GEOIP_DATA_LOCATION",
+    "guess_timezone_by_ip",
+    "format_tz_by_name",
 ]
 
 # --- Specifies the location of GeoIP GeoLiteCity.dat database ---
@@ -122,14 +126,14 @@ def format_tz_by_name(tz_name, tz_formated=None):
     offset = now.strftime("%z")
 
     if tz_formated:
-        tz_formated = re.sub(r'\(GMT.+?\)', '(GMT%s)' % offset, tz_formated)
+        tz_formated = re.sub(r"\(GMT.+?\)", "(GMT%s)" % offset, tz_formated)
     else:
-        tz_formated = '(GMT%s) %s' % (offset, tz_name)
+        tz_formated = "(GMT%s) %s" % (offset, tz_name)
 
     return (offset, tz_name, tz_formated)
 
 
-#--- Private ----------------------------------------------
+# --- Private ----------------------------------------------
 GEO_IP = None
 
 
@@ -173,9 +177,9 @@ class FixedOffset(tzinfo):
         return _zero
 
     def localize(self, dt, is_dst=False):
-        '''Convert naive time to local time'''
+        """Convert naive time to local time"""
         if dt.tzinfo is not None:
-            raise ValueError('Not naive datetime (tzinfo is already set)')
+            raise ValueError("Not naive datetime (tzinfo is already set)")
         return dt.replace(tzinfo=self)
 
     def __getinitargs__(self):
@@ -190,32 +194,32 @@ def _tz_map():
 
     if TZ_MAP is None:
         timezones = [
-            FixedOffset(-720, 'GMT -12:00'),
-            FixedOffset(-660, 'GMT -11:00'),
-            FixedOffset(-600, 'GMT -10:00'),
-            FixedOffset(-540, 'GMT -9:00'),
-            FixedOffset(-480, 'GMT -8:00'),
-            FixedOffset(-420, 'GMT -7:00'),
-            FixedOffset(-360, 'GMT -6:00'),
-            FixedOffset(-300, 'GMT -5:00'),
-            FixedOffset(-240, 'GMT -4:00'),
-            FixedOffset(-180, 'GMT -3:00'),
-            FixedOffset(-120, 'GMT -2:00'),
-            FixedOffset(-60, 'GMT -1:00'),
-            FixedOffset(0, 'GMT'),
-            FixedOffset(60, 'GMT +1:00'),
-            FixedOffset(120, 'GMT +2:00'),
-            FixedOffset(180, 'GMT +3:00'),
-            FixedOffset(240, 'GMT +4:00'),
-            FixedOffset(300, 'GMT +5:00'),
-            FixedOffset(360, 'GMT +6:00'),
-            FixedOffset(420, 'GMT +7:00'),
-            FixedOffset(480, 'GMT +8:00'),
-            FixedOffset(540, 'GMT +9:00'),
-            FixedOffset(600, 'GMT +10:00'),
-            FixedOffset(660, 'GMT +11:00'),
-            FixedOffset(720, 'GMT +12:00'),
-            FixedOffset(780, 'GMT +13:00')
+            FixedOffset(-720, "GMT -12:00"),
+            FixedOffset(-660, "GMT -11:00"),
+            FixedOffset(-600, "GMT -10:00"),
+            FixedOffset(-540, "GMT -9:00"),
+            FixedOffset(-480, "GMT -8:00"),
+            FixedOffset(-420, "GMT -7:00"),
+            FixedOffset(-360, "GMT -6:00"),
+            FixedOffset(-300, "GMT -5:00"),
+            FixedOffset(-240, "GMT -4:00"),
+            FixedOffset(-180, "GMT -3:00"),
+            FixedOffset(-120, "GMT -2:00"),
+            FixedOffset(-60, "GMT -1:00"),
+            FixedOffset(0, "GMT"),
+            FixedOffset(60, "GMT +1:00"),
+            FixedOffset(120, "GMT +2:00"),
+            FixedOffset(180, "GMT +3:00"),
+            FixedOffset(240, "GMT +4:00"),
+            FixedOffset(300, "GMT +5:00"),
+            FixedOffset(360, "GMT +6:00"),
+            FixedOffset(420, "GMT +7:00"),
+            FixedOffset(480, "GMT +8:00"),
+            FixedOffset(540, "GMT +9:00"),
+            FixedOffset(600, "GMT +10:00"),
+            FixedOffset(660, "GMT +11:00"),
+            FixedOffset(720, "GMT +12:00"),
+            FixedOffset(780, "GMT +13:00"),
         ]
 
         TZ_MAP = dict([(z.zone, z) for z in timezones])

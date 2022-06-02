@@ -22,13 +22,15 @@ import json
 from . import tz_utils, zones
 
 
-def html_render_timezones(select_name,
-                          current_selected=None,
-                          user_ip=None,
-                          first_entry='Select your timezone',
-                          force_current_selected=False,
-                          select_id=None,
-                          default_timezone=None):
+def html_render_timezones(
+    select_name,
+    current_selected=None,
+    user_ip=None,
+    first_entry="Select your timezone",
+    force_current_selected=False,
+    select_id=None,
+    default_timezone=None,
+):
     """Render timezone and output HTML.
 
     `select_name`:
@@ -51,15 +53,15 @@ def html_render_timezones(select_name,
         Select's elements id, e.g. <select id="%(select_id)s">.
     """
 
-    #Makes it possible to only mark one timezone as selected
-    sel_checker = {'non_selected_yet': True}
+    # Makes it possible to only mark one timezone as selected
+    sel_checker = {"non_selected_yet": True}
 
     def render_option(value, name, selected=False):
-        if selected and sel_checker['non_selected_yet']:
+        if selected and sel_checker["non_selected_yet"]:
             is_selected = 'selected="selected"'
-            sel_checker['non_selected_yet'] = False
+            sel_checker["non_selected_yet"] = False
         else:
-            is_selected = ''
+            is_selected = ""
         return '<option value="%s" %s>%s</option>' % (value, is_selected, name)
 
     def render_option_disabled():
@@ -70,7 +72,7 @@ def html_render_timezones(select_name,
     else:
         select_elm = '<select name="%s">' % select_name
 
-    result = [ select_elm ]
+    result = [select_elm]
 
     if first_entry:
         result.append('<option value="">%s</option>' % first_entry)
@@ -79,9 +81,7 @@ def html_render_timezones(select_name,
     if force_current_selected and current_selected:
         timezone = format_tz(current_selected)
         if timezone:
-            result.append( render_option(timezone[1],
-                                         timezone[2],
-                                         True) )
+            result.append(render_option(timezone[1], timezone[2], True))
             result.append(render_option_disabled())
 
     # Guess user's timezone by user_ip
@@ -93,9 +93,7 @@ def html_render_timezones(select_name,
 
         if gussed_timezone:
             is_set = current_selected == gussed_timezone[1] or current_selected == None
-            result.append( render_option(gussed_timezone[1],
-                                         gussed_timezone[2],
-                                         is_set) )
+            result.append(render_option(gussed_timezone[1], gussed_timezone[2], is_set))
             result.append(render_option_disabled())
 
     for tz in zones.get_timezones(only_us=True):
@@ -111,9 +109,9 @@ def html_render_timezones(select_name,
     for tz in zones.get_timezones(only_fixed=True):
         result.append(render_option(tz[1], tz[2], current_selected == tz[1]))
 
-    result.append('</select>')
+    result.append("</select>")
 
-    return '\n'.join(result)
+    return "\n".join(result)
 
 
 def get_timezones_json():
