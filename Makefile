@@ -1,7 +1,7 @@
 VERSION := $(shell poetry version --short)
 
 help:
-	@echo "Usage: 'make clean' or 'make build' or 'make tag' or 'make upload'"
+	@echo "Usage: 'make clean' or 'make build' or 'make tag' or 'make upload' or 'make test'"
 
 
 clean:
@@ -23,4 +23,14 @@ tag:
 upload: tag build
 	poetry publish
 
-.PHONY: help clean build tag upload
+
+GeoIP2-City-Test.mmdb:
+	rm -f GeoIP2-City-Test.mmdb
+	wget https://github.com/maxmind/MaxMind-DB/raw/main/test-data/GeoIP2-City-Test.mmdb
+
+
+test: GeoIP2-City-Test.mmdb
+	poetry run pytest
+
+
+.PHONY: help clean build tag upload test

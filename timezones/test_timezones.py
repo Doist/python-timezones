@@ -1,10 +1,14 @@
-import os
+import datetime
+import os.path
+
 import pytest
 import pytz
-import datetime
+
 from timezones import zones, tz_utils, tz_rendering
 
-GEOIP_DATA_LOCATION = "/usr/local/geo_ip/GeoIP2-City.mmdb"
+GEOIP_DATA_LOCATION = os.path.abspath(
+    os.path.join(__file__, "..", "..", "GeoIP2-City-Test.mmdb")
+)
 
 
 def assert_is_lower(offset_a, offset_b):
@@ -42,26 +46,45 @@ def test_get_timezone():
     assert tz_utils.is_valid_timezone("Europe/Moscow1") is False
 
 
-def no_geolib():
-    return not os.path.exists(GEOIP_DATA_LOCATION)
+@pytest.fixture
+def geoip_db():
+    try:
+        import geoip2
+    except ImportError:
+        pytest.skip("geoip2 not installed")
+    if not os.path.exists(GEOIP_DATA_LOCATION):
+        pytest.skip("No GeoIP2 database")
 
-
-@pytest.mark.skipif(no_geolib() is True, reason="Requires GeoIP2 database")
-def test_guess_timezone():
     tz_utils.GEOIP_DATA_LOCATION = GEOIP_DATA_LOCATION
-    assert not tz_utils.guess_timezone_by_ip("70.132.4.78")
-    assert (
-        tz_utils.guess_timezone_by_ip("201.246.115.62", only_name=True)
-        == "America/Santiago"
-    )
+    yield
+    tz_utils.GEOIP_DATA_LOCATION = None
+
+
+def test_guess_timezone_geoip(geoip_db):
     assert tz_utils.guess_timezone_by_ip("000.000.000.000", only_name=True) is None
     assert tz_utils.guess_timezone_by_ip("127.0.0.1", only_name=True) is None
 
-    tz_utils.GEOIP_DATA_LOCATION = "/usr/local/geo_ip/NotFound.mmdb"
-    assert tz_utils.guess_timezone_by_ip("201.246.115.62", only_name=True) is None
+    # This uses the MaxMind test DBs
+    # Source: https://github.com/maxmind/MaxMind-DB/blob/main/source-data/GeoIP2-City-Test.json
+    assert (
+        tz_utils.guess_timezone_by_ip("149.101.100.0", only_name=True)
+        == "America/Chicago"
+    )
+    assert tz_utils.guess_timezone_by_ip("2001:230::1", only_name=True) == "Asia/Seoul"
+
+    # Addresses not in the test DB
+    assert tz_utils.guess_timezone_by_ip("1.2.3.4", only_name=True) is None
+    assert (
+        tz_utils.guess_timezone_by_ip("2001:2002:2003:2004::0", only_name=True) is None
+    )
 
 
-def test_get_timezonez():
+def test_guess_timezone_no_geoip():
+    assert tz_utils.guess_timezone_by_ip("149.101.100.0", only_name=True) is None
+    assert tz_utils.guess_timezone_by_ip("2001:230::1", only_name=True) is None
+
+
+def test_get_timezones():
     assert len(list(zones.get_timezones(only_us=True))) == 8
 
 
