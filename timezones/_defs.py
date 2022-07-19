@@ -163,6 +163,10 @@ _ALL_TIMEZONES = [
     ("+1300", "Pacific/Tongatapu", "(GMT+1300) Nuku'alofa"),
 ]
 
+_PYTZ_ALIASES = {
+    "Europe/Kyiv": "Europe/Kiev",
+}
+
 _FIXED_OFFSETS = [
         ("-1200", "GMT -12:00", "GMT -12:00"),
         ("-1100", "GMT -11:00", "GMT -11:00"),

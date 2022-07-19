@@ -118,3 +118,10 @@ def test_valid_offset(offset_str, tzname, verbose_name):
 def test_get_timezones_json():
     json_list = tz_rendering.get_timezones_json()
     assert "US/" in json_list
+
+
+@pytest.mark.parametrize("tzname", _defs._PYTZ_ALIASES.keys())
+def test_aliases(tzname):
+    _, name, formatted = tz_utils.format_tz_by_name(tzname)
+    assert name == tzname
+    assert tzname in formatted
