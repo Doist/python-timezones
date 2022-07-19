@@ -2,9 +2,8 @@ import datetime
 import os.path
 
 import pytest
-import pytz
 
-from timezones import zones, tz_utils, tz_rendering
+from timezones import _defs, tz_rendering, tz_utils, zones
 
 GEOIP_DATA_LOCATION = os.path.abspath(
     os.path.join(__file__, "..", "..", "GeoIP2-City-Test.mmdb")
@@ -88,9 +87,10 @@ def test_get_timezones():
     assert len(list(zones.get_timezones(only_us=True))) == 8
 
 
-@pytest.mark.parametrize("offset_str,tzname,verbose_name", zones._ALL_TIMEZONES)
+@pytest.mark.parametrize("offset_str,tzname,verbose_name", _defs._ALL_TIMEZONES)
 def test_valid_offset(offset_str, tzname, verbose_name):
-    tz = pytz.timezone(tzname)
+    assert tz_utils.is_valid_timezone(tzname)
+    tz = tz_utils.get_timezone(tzname)
 
     # 1. Find a timestamp without DST shift
     now = datetime.datetime.utcnow()
