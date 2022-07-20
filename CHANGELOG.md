@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Introduce this changelog 🎉
 
 ### Changed
+- Rename Europe/Kiev to Europe/Kyiv.
 - Switch to Poetry for packaging.
 - Dependencies: `future` is no longer required, and `geoip2` is now optional.
 - Improve CI and dev tooling.

@@ -39,6 +39,8 @@ from datetime import datetime, timedelta, tzinfo
 
 import pytz
 
+from timezones import _defs
+
 try:
     import geoip2.database as geoip2_db
 
@@ -96,10 +98,20 @@ def get_timezone(tzname):
 
     This getter support fixed offest timezone like `get_timezone('GMT +10:00')`"""
     try:
-        tz = pytz.timezone(tzname)
-    except (KeyError, IOError):
-        tz = _tz_map().get(tzname)
-    return tz
+        # First, try with the provided name
+        return pytz.timezone(tzname)
+    except pytz.UnknownTimeZoneError:
+        pass
+
+    # No result: try with an alias, if there's one
+    if alias := (_defs._PYTZ_ALIASES.get(tzname)):
+        try:
+            return pytz.timezone(alias)
+        except pytz.UnknownTimeZoneError:
+            pass
+
+    # Still no result: fallback to a static timezone, or return None
+    return _tz_map().get(tzname)
 
 
 def is_valid_timezone(timezone):
