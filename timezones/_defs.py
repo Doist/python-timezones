@@ -1,4 +1,10 @@
-_US_TIMEZONES = [
+Timezone = tuple[
+    str,  # offset
+    str,  # name
+    str,  # formatted name
+]
+
+_US_TIMEZONES: list[Timezone] = [
     ("-1000", "US/Hawaii", "(GMT-1000) Hawaii"),
     ("-0900", "US/Alaska", "(GMT-0900) Alaska"),
     ("-0800", "US/Pacific", "(GMT-0800) Pacific Time (US & Canada)"),
@@ -9,7 +15,7 @@ _US_TIMEZONES = [
     ("-0500", "US/East-Indiana", "(GMT-0500) Indiana (East)"),
 ]
 
-_ALL_TIMEZONES = [
+_ALL_TIMEZONES: list[Timezone] = [
     ("-1100", "Pacific/Midway", "(GMT-1100) International Date Line West"),
     ("-1100", "Pacific/Midway", "(GMT-1100) Midway Island"),
     ("-1100", "Pacific/Samoa", "(GMT-1100) Samoa"),
@@ -167,7 +173,7 @@ _TZ_ALIASES = {
     "Europe/Kyiv": "Europe/Kiev",
 }
 
-_FIXED_OFFSETS = [
+_FIXED_OFFSETS: list[Timezone] = [
     ("-1200", "GMT -12:00", "GMT -12:00"),
     ("-1100", "GMT -11:00", "GMT -11:00"),
     ("-1000", "GMT -10:00", "GMT -10:00"),

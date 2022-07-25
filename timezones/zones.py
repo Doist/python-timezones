@@ -21,7 +21,10 @@ Example usage (returns US based timezones)::
 :copyright: 2012 by Amir Salihefendic ( http://amix.dk/ )
 :license: MIT
 """
+from __future__ import annotations
+
 import re
+from typing import Iterator
 
 from . import _defs, tz_utils
 
@@ -30,7 +33,9 @@ _UPDATED_TZS = False
 _RE_TZ_OFFSET = re.compile(r"([+-])(\d\d)(\d\d)")
 
 
-def get_timezones(only_us=False, only_fixed=False):
+def get_timezones(
+    only_us: bool = False, only_fixed: bool = False
+) -> Iterator[_defs.Timezone]:
     """Returns an iterator of timezones.
 
     `only_us` (optional, defaults to `False`):
@@ -59,15 +64,14 @@ def get_timezones(only_us=False, only_fixed=False):
             yield tz
 
 
-def get_timezones_dict():
+def get_timezones_dict() -> dict[str, _defs.Timezone]:
     global _ALL_TIMEZONES_DICT
     if _ALL_TIMEZONES_DICT is None:
         _ALL_TIMEZONES_DICT = {tz[1]: tz for tz in get_timezones()}
     return _ALL_TIMEZONES_DICT
 
 
-
-_ALL_TIMEZONES_DICT = None
+_ALL_TIMEZONES_DICT: dict[str, _defs.Timezone] | None = None
 
 
 def _tz_offset_key(offset):
