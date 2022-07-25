@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 tz_utils
 ~~~~~~~~
@@ -38,7 +37,7 @@ import re
 import zoneinfo as zi
 from datetime import datetime, timedelta, tzinfo
 
-from timezones import _defs
+from . import _defs
 
 try:
     import geoip2.database as geoip2_db

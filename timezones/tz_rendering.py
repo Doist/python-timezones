@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 tz_rendering
 ~~~~~~~~
@@ -19,7 +18,7 @@ Example usage (returns HTML based on current properties)::
 """
 import json
 
-from . import tz_utils, zones
+from . import _defs, tz_utils, zones
 
 
 def html_render_timezones(

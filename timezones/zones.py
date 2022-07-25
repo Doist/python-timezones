@@ -23,7 +23,7 @@ Example usage (returns US based timezones)::
 """
 import re
 
-from timezones import tz_utils, _defs
+from . import _defs, tz_utils
 
 _UPDATED_TZS = False
 
