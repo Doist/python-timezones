@@ -88,7 +88,7 @@ def guess_timezone_by_ip(ip, only_name=False):
                         return location.time_zone
                     else:
                         return format_tz_by_name(location.time_zone)
-        except:
+        except Exception:
             record = None
     return None
 
@@ -122,7 +122,7 @@ def is_valid_timezone(timezone):
             return True
         else:
             return False
-    except:
+    except Exception:
         return False
 
 
@@ -157,7 +157,7 @@ def _get_geoip_lib():
 
     try:
         GEO_IP = geoip2_db.Reader(GEOIP_DATA_LOCATION)
-    except:
+    except Exception:
         return None
 
     return GEO_IP

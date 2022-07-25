@@ -5,14 +5,17 @@ tz_rendering
 
 HTML helper to render timezones. The output will be a SELECT element.
 
-Will auto guess the user's timezone based on IP. Will auto-select the current selected timezone.
+Will auto guess the user's timezone based on IP. Will auto-select the current
+selected timezone.
 
 Example usage (returns HTML based on current properties)::
 
-    html_timezones = tz_rendering.html_render_timezones('timezone',
-                                                        current_selected,
-                                                        get_current_ip(),
-                                                        first_entry=_('Select your timezone'))
+    html_timezones = tz_rendering.html_render_timezones(
+        'timezone',
+        current_selected,
+        get_current_ip(),
+        first_entry=_('Select your timezone'),
+    )
 
 :copyright: 2012 by Amir Salihefendic ( http://amix.dk/ )
 :license: MIT
@@ -92,7 +95,7 @@ def html_render_timezones(
             gussed_timezone = format_tz(default_timezone)
 
         if gussed_timezone:
-            is_set = current_selected == gussed_timezone[1] or current_selected == None
+            is_set = current_selected == gussed_timezone[1] or current_selected is None
             result.append(render_option(gussed_timezone[1], gussed_timezone[2], is_set))
             result.append(render_option_disabled())
 

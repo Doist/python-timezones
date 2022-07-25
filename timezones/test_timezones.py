@@ -48,7 +48,7 @@ def test_get_timezone():
 @pytest.fixture
 def geoip_db():
     try:
-        import geoip2
+        import geoip2  # noqa: F401
     except ImportError:
         pytest.skip("geoip2 not installed")
     if not os.path.exists(GEOIP_DATA_LOCATION):
@@ -63,8 +63,8 @@ def test_guess_timezone_geoip(geoip_db):
     assert tz_utils.guess_timezone_by_ip("000.000.000.000", only_name=True) is None
     assert tz_utils.guess_timezone_by_ip("127.0.0.1", only_name=True) is None
 
-    # This uses the MaxMind test DBs
-    # Source: https://github.com/maxmind/MaxMind-DB/blob/main/source-data/GeoIP2-City-Test.json
+    # This uses the MaxMind test DBs; source:
+    # https://github.com/maxmind/MaxMind-DB/blob/main/source-data/GeoIP2-City-Test.json
     assert (
         tz_utils.guess_timezone_by_ip("149.101.100.0", only_name=True)
         == "America/Chicago"
