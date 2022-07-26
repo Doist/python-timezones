@@ -277,14 +277,6 @@ tomli = ">=1.0.0"
 testing = ["argcomplete", "hypothesis (>=3.56)", "mock", "nose", "pygments (>=2.7.2)", "requests", "xmlschema"]
 
 [[package]]
-name = "pytz"
-version = "2022.1"
-description = "World timezone definitions, modern and historical"
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "requests"
 version = "2.27.1"
 description = "Python HTTP for Humans."
@@ -394,14 +386,6 @@ python-versions = "*"
 types-ipaddress = "*"
 
 [[package]]
-name = "types-pytz"
-version = "2021.3.8"
-description = "Typing stubs for pytz"
-category = "dev"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "typing-extensions"
 version = "4.2.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
@@ -469,8 +453,8 @@ geoip = ["geoip2"]
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.8"
-content-hash = "2a9be9c6b57b881ae752b7cbff0c26283252dcd17684604e759301bcbcd2cb07"
+python-versions = "^3.9"
+content-hash = "82cc13de2755a2cc17c6294056a0291dbd8903026e7cf96ac22186ac4c4e610c"
 
 [metadata.files]
 aiohttp = [
@@ -777,10 +761,6 @@ pytest = [
     {file = "pytest-7.1.2-py3-none-any.whl", hash = "sha256:13d0e3ccfc2b6e26be000cb6568c832ba67ba32e719443bfe725814d3c42433c"},
     {file = "pytest-7.1.2.tar.gz", hash = "sha256:a06a0425453864a270bc45e71f783330a7428defb4230fb5e6a731fde06ecd45"},
 ]
-pytz = [
-    {file = "pytz-2022.1-py2.py3-none-any.whl", hash = "sha256:e68985985296d9a66a881eb3193b0906246245294a881e7c8afe623866ac6a5c"},
-    {file = "pytz-2022.1.tar.gz", hash = "sha256:1e760e2fe6a8163bc0b3d9a19c4f84342afa0a2affebfaa84b01b978a02ecaa7"},
-]
 requests = [
     {file = "requests-2.27.1-py2.py3-none-any.whl", hash = "sha256:f22fa1e554c9ddfd16e6e41ac79759e17be9e492b3587efa038054674760e72d"},
     {file = "requests-2.27.1.tar.gz", hash = "sha256:68d7c56fd5a8999887728ef304a6d12edc7be74f1cfa47714fc8b414525c9a61"},
@@ -816,10 +796,6 @@ types-ipaddress = [
 types-maxminddb = [
     {file = "types-maxminddb-1.5.0.tar.gz", hash = "sha256:9146df7098d834d5f584d2393af85ef9294c67a16ace991f1635a2aa331f7854"},
     {file = "types_maxminddb-1.5.0-py3-none-any.whl", hash = "sha256:4bdcd434a6f12feefbe1fa569cc202b15556cb5a5aec38f1008446516a36dc36"},
-]
-types-pytz = [
-    {file = "types-pytz-2021.3.8.tar.gz", hash = "sha256:41253a3a2bf028b6a3f17b58749a692d955af0f74e975de94f6f4d2d3cd01dbd"},
-    {file = "types_pytz-2021.3.8-py3-none-any.whl", hash = "sha256:aef4a917ab28c585d3f474bfce4f4b44b91e95d9d47d4de29dd845e0db8e3910"},
 ]
 typing-extensions = [
     {file = "typing_extensions-4.2.0-py3-none-any.whl", hash = "sha256:6657594ee297170d19f67d55c05852a874e7eb634f4f753dbd667855e07c1708"},

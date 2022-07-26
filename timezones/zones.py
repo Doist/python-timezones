@@ -42,7 +42,7 @@ def get_timezones(only_us=False, only_fixed=False):
     global _UPDATED_TZS
 
     # We need to update the offsets to ensure they are correct
-    # with pytz latest info
+    # with zoneinfo latest info
     if not _UPDATED_TZS:
         _defs._US_TIMEZONES = _update_offsets(_defs._US_TIMEZONES)
         _defs._ALL_TIMEZONES = _update_offsets(_defs._ALL_TIMEZONES)

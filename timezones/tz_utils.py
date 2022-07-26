@@ -35,9 +35,8 @@ Example usage (is a timezone valid?)::
 :license: MIT
 """
 import re
+import zoneinfo as zi
 from datetime import datetime, timedelta, tzinfo
-
-import pytz
 
 from timezones import _defs
 
@@ -99,15 +98,15 @@ def get_timezone(tzname):
     This getter support fixed offest timezone like `get_timezone('GMT +10:00')`"""
     try:
         # First, try with the provided name
-        return pytz.timezone(tzname)
-    except pytz.UnknownTimeZoneError:
+        return zi.ZoneInfo(tzname)
+    except zi.ZoneInfoNotFoundError:
         pass
 
     # No result: try with an alias, if there's one
-    if alias := (_defs._PYTZ_ALIASES.get(tzname)):
+    if alias := (_defs._TZ_ALIASES.get(tzname)):
         try:
-            return pytz.timezone(alias)
-        except pytz.UnknownTimeZoneError:
+            return zi.ZoneInfo(alias)
+        except zi.ZoneInfoNotFoundError:
             pass
 
     # Still no result: fallback to a static timezone, or return None

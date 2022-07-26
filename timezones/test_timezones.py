@@ -120,7 +120,7 @@ def test_get_timezones_json():
     assert "US/" in json_list
 
 
-@pytest.mark.parametrize("tzname", _defs._PYTZ_ALIASES.keys())
+@pytest.mark.parametrize("tzname", _defs._TZ_ALIASES.keys())
 def test_aliases(tzname):
     _, name, formatted = tz_utils.format_tz_by_name(tzname)
     assert name == tzname
