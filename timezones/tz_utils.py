@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 tz_utils
 ~~~~~~~~
@@ -34,11 +33,13 @@ Example usage (is a timezone valid?)::
 :copyright: 2012 by Amir Salihefendic ( http://amix.dk/ )
 :license: MIT
 """
+from __future__ import annotations
+
 import re
 import zoneinfo as zi
 from datetime import datetime, timedelta, tzinfo
 
-from timezones import _defs
+from . import _defs
 
 try:
     import geoip2.database as geoip2_db
@@ -61,7 +62,7 @@ GEOIP_DATA_LOCATION = None
 
 
 # --- Functions ----------------------------------------------
-def guess_timezone_by_ip(ip, only_name=False):
+def guess_timezone_by_ip(ip: str, only_name: bool = False):
     """Given an `ip` with guess timezone using geoip2.
     Returns a tuple of (tz_offets, tz_name, tz_formated).
     `None` is returned if it can't guess a timezone.
@@ -92,7 +93,7 @@ def guess_timezone_by_ip(ip, only_name=False):
     return None
 
 
-def get_timezone(tzname):
+def get_timezone(tzname: str) -> tzinfo | None:
     """Get a timezone instance by name or return `None`.
 
     This getter support fixed offest timezone like `get_timezone('GMT +10:00')`"""
@@ -113,7 +114,7 @@ def get_timezone(tzname):
     return _tz_map().get(tzname)
 
 
-def is_valid_timezone(timezone):
+def is_valid_timezone(timezone: str) -> bool:
     """Return `True` if the `timezone` is valid. Otherwise `False` is returned."""
     try:
         tz = get_timezone(timezone)
@@ -125,7 +126,7 @@ def is_valid_timezone(timezone):
         return False
 
 
-def format_tz_by_name(tz_name, tz_formated=None):
+def format_tz_by_name(tz_name: str, tz_formated: str | None = None) -> _defs.Timezone:
     """Returns a tuple of (tz_offets, tz_name, tz_formated).
 
     Example::

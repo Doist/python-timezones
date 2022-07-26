@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 tz_rendering
 ~~~~~~~~
@@ -20,20 +19,23 @@ Example usage (returns HTML based on current properties)::
 :copyright: 2012 by Amir Salihefendic ( http://amix.dk/ )
 :license: MIT
 """
-import json
+from __future__ import annotations
 
-from . import tz_utils, zones
+import json
+from typing import Any
+
+from . import _defs, tz_utils, zones
 
 
 def html_render_timezones(
-    select_name,
-    current_selected=None,
-    user_ip=None,
-    first_entry="Select your timezone",
-    force_current_selected=False,
-    select_id=None,
-    default_timezone=None,
-):
+    select_name: str,
+    current_selected: str | None = None,
+    user_ip: str | None = None,
+    first_entry: str = "Select your timezone",
+    force_current_selected: bool = False,
+    select_id: Any = None,
+    default_timezone: str | None = None,
+) -> str:
     """Render timezone and output HTML.
 
     `select_name`:
@@ -117,7 +119,7 @@ def html_render_timezones(
     return "\n".join(result)
 
 
-def get_timezones_json():
+def get_timezones_json() -> str:
     result = []
     for tz in zones.get_timezones(only_us=True):
         result.append((tz[1], tz[2]))
@@ -131,7 +133,7 @@ def get_timezones_json():
     return json.dumps(result)
 
 
-def format_tz(tz_name):
+def format_tz(tz_name: str) -> _defs.Timezone:
     tz = zones.get_timezones_dict().get(tz_name)
     if tz:
         return tz

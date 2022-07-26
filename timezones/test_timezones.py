@@ -3,7 +3,7 @@ import os.path
 
 import pytest
 
-from timezones import _defs, tz_rendering, tz_utils, zones
+from . import _defs, tz_rendering, tz_utils, zones
 
 GEOIP_DATA_LOCATION = os.path.abspath(
     os.path.join(__file__, "..", "..", "GeoIP2-City-Test.mmdb")
