@@ -23,11 +23,7 @@ Example usage (returns US based timezones)::
 """
 from __future__ import annotations
 
-import re
-
 from . import _defs, tz_utils
-
-_RE_TZ_OFFSET = re.compile(r"([+-])(\d\d)(\d\d)")
 
 _updated_all_tzs: list[_defs.Timezone] = []
 _updated_us_tzs: list[_defs.Timezone] = []
@@ -71,24 +67,13 @@ def get_timezones_dict() -> dict[str, _defs.Timezone]:
 _ALL_TIMEZONES_DICT: dict[str, _defs.Timezone] | None = None
 
 
-def _tz_offset_key(offset):
+def _tz_offset_key(offset) -> int:
     # Convert a tz offset to a key that can be used by sort().
-    # Since Python can sort tuples in lexicographical order, we just convert it
-    # to a tuple.
+    # Just convert it to an int: +0100 -> 100, +0130 -> 130, -0345 -> -345...
+    # that's enough for sorting.
     if isinstance(offset, tuple):
         offset = offset[0]
-
-    mtch = _RE_TZ_OFFSET.match(offset)
-    is_negative, hours, minutes = (
-        mtch.group(1) == "-",
-        int(mtch.group(2)),
-        int(mtch.group(3)),
-    )
-
-    if is_negative:
-        hours, minutes = -hours, -minutes
-
-    return (hours, minutes)
+    return int(offset)
 
 
 def _update_offsets(timezone_collection: list[tuple[str, str]]) -> list[_defs.Timezone]:
