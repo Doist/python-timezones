@@ -35,7 +35,6 @@ Example usage (is a timezone valid?)::
 """
 from __future__ import annotations
 
-import re
 import zoneinfo as zi
 from datetime import datetime, timedelta, tzinfo
 
@@ -64,7 +63,7 @@ GEOIP_DATA_LOCATION = None
 # --- Functions ----------------------------------------------
 def guess_timezone_by_ip(ip: str, only_name: bool = False):
     """Given an `ip` with guess timezone using geoip2.
-    Returns a tuple of (tz_offets, tz_name, tz_formated).
+    Returns a tuple of (tz_offets, tz_name, tz_formatted).
     `None` is returned if it can't guess a timezone.
 
     For this to work you need to set tz_utils.GEOIP_DATA_LOCATION
@@ -126,23 +125,26 @@ def is_valid_timezone(timezone: str) -> bool:
         return False
 
 
-def format_tz_by_name(tz_name: str, tz_formated: str | None = None) -> _defs.Timezone:
-    """Returns a tuple of (tz_offets, tz_name, tz_formated).
+def format_tz_by_name(tz_name: str, tz_formatted: str | None = None) -> _defs.Timezone:
+    """Returns a tuple of (tz_offets, tz_name, tz_formatted).
 
-    Example::
-        format_tz_by_name('Europe/Copenhagen')
-            =>
-        ("+0100", "Europe/Copenhagen", '(GMT+0100) Copenhagen')
+    >>> format_tz_by_name("Europe/Copenhagen")
+    ("+0100", "Europe/Copenhagen", "(GMT+0100) Copenhagen")
+    >>> format_tz_by_name("America/Sao_Paulo", "Brasilia, Sao Paulo")
+    ("-0300", "America/Sao_Paulo", "(GMT-0300) Brasilia, Sao Paulo")
     """
-    now = datetime.now(get_timezone(tz_name))
+    tz = get_timezone(tz_name)
+    if not tz:
+        raise ValueError(f"Invalid timezone {tz_name}")
+
+    # Make sure we have a date without DST
+    now = datetime.now(tz)
+    while (dst := now.dst()) is not None and dst.total_seconds() != 0:
+        now += timedelta(days=30)
     offset = now.strftime("%z")
 
-    if tz_formated:
-        tz_formated = re.sub(r"\(GMT.+?\)", "(GMT%s)" % offset, tz_formated)
-    else:
-        tz_formated = "(GMT%s) %s" % (offset, tz_name)
-
-    return (offset, tz_name, tz_formated)
+    tz_formatted = f"(GMT{offset}) {tz_formatted or tz_name}"
+    return (offset, tz_name, tz_formatted)
 
 
 # --- Private ----------------------------------------------

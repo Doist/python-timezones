@@ -87,20 +87,23 @@ def test_get_timezones():
     assert len(list(zones.get_timezones(only_us=True))) == 8
 
 
-@pytest.mark.parametrize("offset_str,tzname,verbose_name", _defs._ALL_TIMEZONES)
+@pytest.mark.parametrize("offset_str,tzname,verbose_name", zones.get_timezones())
 def test_valid_offset(offset_str, tzname, verbose_name):
     assert tz_utils.is_valid_timezone(tzname)
     tz = tz_utils.get_timezone(tzname)
+    assert tz
 
     # 1. Find a timestamp without DST shift
     now = datetime.datetime.utcnow()
-    winter_time = datetime.datetime(now.year + 1, 1, 1)
-    summer_time = datetime.datetime(now.year + 1, 7, 1)
+    winter_time = datetime.datetime(now.year, 1, 1)
+    summer_time = datetime.datetime(now.year, 7, 1)
 
     # Looking for a timestamp with zero DST offset
     for ts in [winter_time, summer_time]:
         if tz.dst(ts) == datetime.timedelta(0):
             break
+    else:
+        assert False, "No timestamp with zero DST offset"
 
     # 2. Take tz shift without DST
     offset_full_minutes = int(tz.utcoffset(ts).total_seconds() / 60)
