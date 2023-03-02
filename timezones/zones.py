@@ -3,13 +3,13 @@ zones
 ~~~~~~~~
 
 Holds a collection of common timezones.
-Is much smaller and better formated than pytz.common_timezones.
+Is much smaller and better formatted than pytz.common_timezones.
 It also supports fixed timezones such as `GMT +7:00`.
 
 Example usage (returns US based timezones)::
 
-    for tz_offset, tz_name, tz_formated in zones.get_timezones(only_us=True):
-        print(tz_formated)
+    for tz_offset, tz_name, tz_formatted in zones.get_timezones(only_us=True):
+        print(tz_formatted)
 
         =>
 
