@@ -134,7 +134,14 @@ def format_tz_by_name(tz_name: str, tz_formated: str | None = None) -> _defs.Tim
             =>
         ("+0100", "Europe/Copenhagen", '(GMT+0100) Copenhagen')
     """
-    now = datetime.now(get_timezone(tz_name))
+    tz = get_timezone(tz_name)
+    if not tz:
+        raise ValueError(f"Invalid timezone {tz_name}")
+
+    # Make sure we have a date without DST
+    now = datetime.now(tz)
+    while (dst := now.dst()) is not None and dst.total_seconds() != 0:
+        now += timedelta(days=30)
     offset = now.strftime("%z")
 
     if tz_formated:
