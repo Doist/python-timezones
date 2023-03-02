@@ -87,7 +87,7 @@ def test_get_timezones():
     assert len(list(zones.get_timezones(only_us=True))) == 8
 
 
-@pytest.mark.parametrize("offset_str,tzname,verbose_name", _defs._ALL_TIMEZONES)
+@pytest.mark.parametrize("offset_str,tzname,verbose_name", zones.get_timezones())
 def test_valid_offset(offset_str, tzname, verbose_name):
     assert tz_utils.is_valid_timezone(tzname)
     tz = tz_utils.get_timezone(tzname)
