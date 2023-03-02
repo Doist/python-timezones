@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Use `zoneinfo` (in the standard library since Python 3.9) instead of `pytz`.
+- Improved UTC offsets, to ensure they're always up-to-date (according to `zoneinfo`) and never include DST.
 
 ## Removed
 - Drop support for Python 3.8.
