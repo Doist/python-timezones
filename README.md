@@ -8,5 +8,6 @@ can output HTML and auto select the best timezone based on user's IP.
 
 Visit https://doist.github.io/python-timezones/ for more information.
 
-Copyright: 2012-2022 by Doist
+Copyright: 2012-2023 by Doist
+
 License: MIT.
