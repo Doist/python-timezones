@@ -138,13 +138,18 @@ def format_tz_by_name(tz_name: str, tz_formatted: str | None = None) -> _defs.Ti
         raise ValueError(f"Invalid timezone {tz_name}")
 
     # Make sure we have a date without DST
-    now = datetime.now(tz)
-    while (dst := now.dst()) is not None and dst.total_seconds() != 0:
-        now += timedelta(days=30)
-    offset = now.strftime("%z")
+    dt = get_last_datetime_without_dst(tz)
+    offset = dt.strftime("%z")
 
     tz_formatted = f"(GMT{offset}) {tz_formatted or tz_name}"
     return (offset, tz_name, tz_formatted)
+
+
+def get_last_datetime_without_dst(tz: tzinfo):
+    dt = datetime.now(tz)
+    while (dst := dt.dst()) is not None and dst.total_seconds() != 0:
+        dt -= timedelta(days=30)
+    return dt
 
 
 # --- Private ----------------------------------------------

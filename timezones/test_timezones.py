@@ -94,19 +94,10 @@ def test_valid_offset(offset_str, tzname, verbose_name):
     assert tz
 
     # 1. Find a timestamp without DST shift
-    now = datetime.datetime.utcnow()
-    winter_time = datetime.datetime(now.year, 1, 1)
-    summer_time = datetime.datetime(now.year, 7, 1)
-
-    # Looking for a timestamp with zero DST offset
-    for ts in [winter_time, summer_time]:
-        if tz.dst(ts) == datetime.timedelta(0):
-            break
-    else:
-        assert False, "No timestamp with zero DST offset"
+    dt = tz_utils.get_last_datetime_without_dst(tz)
 
     # 2. Take tz shift without DST
-    offset_full_minutes = int(tz.utcoffset(ts).total_seconds() / 60)
+    offset_full_minutes = int(tz.utcoffset(dt).total_seconds() / 60)
     offset_sign = "+" if offset_full_minutes >= 0 else "-"
 
     offset_hours = abs(offset_full_minutes) // 60
