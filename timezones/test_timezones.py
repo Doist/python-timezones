@@ -1,7 +1,7 @@
+import datetime
 import os.path
 import re
 import zoneinfo
-from importlib import resources
 
 import pytest
 
@@ -116,27 +116,45 @@ def test_valid_offset(offset_str, tzname, verbose_name):
     expected_offset = "%s%02d%02d" % (offset_sign, offset_hours, offset_minutes)
     assert offset_str == expected_offset, "Invalid offset for {}".format(tzname)
 
-    zoneinfo.available_timezones()
-
     # 3. Test verbose name
     assert verbose_name.startswith("(GMT%s) " % expected_offset)
 
 
-@pytest.fixture(scope="session")
 def obsolete_names():
-    obsolete_names = {}
+    names = {}
     with open("tzdata2023c/backward", "r") as f:
         for line in f:
             line = line.strip()
             if not line.startswith("Link\t"):
                 continue
             _link, dest, source, *_ = re.split("\t+", line)
-            obsolete_names[source] = dest
-    return obsolete_names
+            names[source] = dest
+    return names
+
+@pytest.fixture(name="obsolete_names", scope="session")
+def obsolete_names_fixture():
+    obsolete_names()
 
 @pytest.mark.parametrize("_offset_str,tzname,_verbose_name", zones.get_timezones())
 def test_obsolete_names(_offset_str, tzname, _verbose_name, obsolete_names):
     assert tzname not in obsolete_names.keys(), f"{tzname} is obsolete, use {obsolete_names[tzname]} instead"
+
+
+def common_names(obsolete_names):
+    # TODO: This should be in the library, not a fixture.
+    return [
+        z for z in zoneinfo.available_timezones()
+        if (z not in obsolete_names.keys() and
+            "/" in z and
+            not z.startswith("SystemV/") and
+            not z.startswith("Etc/"))
+    ]
+
+
+@pytest.mark.parametrize("tzname", common_names(obsolete_names()))
+def test_missing_names(tzname):
+    assert tzname in zones.get_timezones_dict().keys()
+
 
 def test_get_timezones_json():
     json_list = tz_rendering.get_timezones_json()
