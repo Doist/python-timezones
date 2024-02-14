@@ -67,13 +67,13 @@ def html_render_timezones(
             sel_checker["non_selected_yet"] = False
         else:
             is_selected = ""
-        return '<option value="%s" %s>%s</option>' % (value, is_selected, name)
+        return f'<option value="{value}" {is_selected}>{name}</option>'
 
     def render_option_disabled():
         return '<option disabled="disabled">--------------------</option>'
 
     if select_id:
-        select_elm = '<select name="%s" id="%s">' % (select_name, select_id)
+        select_elm = f'<select name="{select_name}" id="{select_id}">'
     else:
         select_elm = '<select name="%s">' % select_name
 

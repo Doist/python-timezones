@@ -35,8 +35,9 @@ Example usage (is a timezone valid?)::
 """
 from __future__ import annotations
 
-import zoneinfo as zi
 from datetime import datetime, timedelta, tzinfo
+
+import zoneinfo as zi
 
 from . import _defs
 
@@ -72,8 +73,9 @@ def guess_timezone_by_ip(ip: str, only_name: bool = False):
     Example usage::
 
         from timezones import tz_utils
-        tz_utils.GEOIP_DATA_LOCATION = '/usr/local/geo_ip/GeoLiteCity.dat'
-        assert tz_utils.guess_timezone_by_ip('201.246.115.62') == 'Chile/Continental'
+
+        tz_utils.GEOIP_DATA_LOCATION = "/usr/local/geo_ip/GeoLiteCity.dat"
+        assert tz_utils.guess_timezone_by_ip("201.246.115.62") == "Chile/Continental"
 
     """
     geo_lib = _get_geoip_lib()
@@ -93,9 +95,11 @@ def guess_timezone_by_ip(ip: str, only_name: bool = False):
 
 
 def get_timezone(tzname: str) -> tzinfo | None:
-    """Get a timezone instance by name or return `None`.
+    """
+    Get a timezone instance by name or return `None`.
 
-    This getter support fixed offest timezone like `get_timezone('GMT +10:00')`"""
+    This getter support fixed offest timezone like `get_timezone('GMT +10:00')`
+    """
     try:
         # First, try with the provided name
         return zi.ZoneInfo(tzname)
@@ -117,10 +121,7 @@ def is_valid_timezone(timezone: str) -> bool:
     """Return `True` if the `timezone` is valid. Otherwise `False` is returned."""
     try:
         tz = get_timezone(timezone)
-        if tz:
-            return True
-        else:
-            return False
+        return bool(tz)
     except Exception:
         return False
 
@@ -241,6 +242,6 @@ def _tz_map():
             FixedOffset(780, "GMT +13:00"),
         ]
 
-        TZ_MAP = dict([(z.zone, z) for z in timezones])
+        TZ_MAP = {z.zone: z for z in timezones}
 
     return TZ_MAP
