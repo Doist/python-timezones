@@ -1,4 +1,3 @@
-import datetime
 import os.path
 
 import pytest
@@ -103,7 +102,7 @@ def test_valid_offset(offset_str, tzname, verbose_name):
     offset_hours = abs(offset_full_minutes) // 60
     offset_minutes = abs(offset_full_minutes) - (offset_hours * 60)
     expected_offset = "%s%02d%02d" % (offset_sign, offset_hours, offset_minutes)
-    assert offset_str == expected_offset, "Invalid offset for {}".format(tzname)
+    assert offset_str == expected_offset, f"Invalid offset for {tzname}"
 
     # 3. Test verbose name
     assert verbose_name.startswith("(GMT%s) " % expected_offset)
