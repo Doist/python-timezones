@@ -23,8 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install poetry
-        poetry install -E geoip
-        wget -q https://github.com/maxmind/MaxMind-DB/raw/main/test-data/GeoIP2-City-Test.mmdb
+        poetry install
 
     - name: Test with tox
       run: poetry run tox

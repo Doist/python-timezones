@@ -4,21 +4,20 @@ tz_rendering
 
 HTML helper to render timezones. The output will be a SELECT element.
 
-Will auto guess the user's timezone based on IP. Will auto-select the current
-selected timezone.
+Will auto-select the current selected timezone.
 
 Example usage (returns HTML based on current properties)::
 
     html_timezones = tz_rendering.html_render_timezones(
         'timezone',
         current_selected,
-        get_current_ip(),
         first_entry=_('Select your timezone'),
     )
 
 :copyright: 2012 by Amir Salihefendic ( http://amix.dk/ )
 :license: MIT
 """
+
 from __future__ import annotations
 
 import json
@@ -30,7 +29,6 @@ from . import _defs, tz_utils, zones
 def html_render_timezones(
     select_name: str,
     current_selected: str | None = None,
-    user_ip: str | None = None,
     first_entry: str = "Select your timezone",
     force_current_selected: bool = False,
     select_id: Any = None,
@@ -44,9 +42,6 @@ def html_render_timezones(
     `current_selected` (optional):
         Is the name of the current timezone, e.g. "Europe/Copenhagen"
         is used to auto select the current timezone option in the select element
-
-    `user_ip` (optional):
-        User's ip, used to auto guess the timezone
 
     `first_entry` (optional):
         What should the first option be? If `None` it won't be shown at all
@@ -87,18 +82,6 @@ def html_render_timezones(
         timezone = format_tz(current_selected)
         if timezone:
             result.append(render_option(timezone[1], timezone[2], True))
-            result.append(render_option_disabled())
-
-    # Guess user's timezone by user_ip
-    if user_ip:
-        gussed_timezone = tz_utils.guess_timezone_by_ip(user_ip)
-
-        if not gussed_timezone and default_timezone:
-            gussed_timezone = format_tz(default_timezone)
-
-        if gussed_timezone:
-            is_set = current_selected == gussed_timezone[1] or current_selected is None
-            result.append(render_option(gussed_timezone[1], gussed_timezone[2], is_set))
             result.append(render_option_disabled())
 
     for tz in zones.get_timezones(only_us=True):
