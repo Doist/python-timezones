@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Changed
 - Add support for Python 3.11, 3.12 and 3.13.
+- Add notice about the package being in maintenance mode only.
 
 ### Removed
 - Drop support for GeoIP and `guess_timezone_by_ip()`.
