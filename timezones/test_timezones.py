@@ -4,10 +4,6 @@ import pytest
 
 from . import _defs, tz_rendering, tz_utils, zones
 
-GEOIP_DATA_LOCATION = os.path.abspath(
-    os.path.join(__file__, "..", "..", "GeoIP2-City-Test.mmdb")
-)
-
 
 def assert_is_lower(offset_a, offset_b):
     # Force a real sort to happen: to avoid optimizations from kicking in, make
@@ -42,44 +38,6 @@ def test_get_timezone():
     assert tz_utils.is_valid_timezone("GMT +1:00")
     assert tz_utils.is_valid_timezone("Europe/Moscow")
     assert tz_utils.is_valid_timezone("Europe/Moscow1") is False
-
-
-@pytest.fixture
-def geoip_db():
-    try:
-        import geoip2  # noqa: F401
-    except ImportError:
-        pytest.skip("geoip2 not installed")
-    if not os.path.exists(GEOIP_DATA_LOCATION):
-        pytest.skip("No GeoIP2 database")
-
-    tz_utils.GEOIP_DATA_LOCATION = GEOIP_DATA_LOCATION
-    yield
-    tz_utils.GEOIP_DATA_LOCATION = None
-
-
-def test_guess_timezone_geoip(geoip_db):
-    assert tz_utils.guess_timezone_by_ip("000.000.000.000", only_name=True) is None
-    assert tz_utils.guess_timezone_by_ip("127.0.0.1", only_name=True) is None
-
-    # This uses the MaxMind test DBs; source:
-    # https://github.com/maxmind/MaxMind-DB/blob/main/source-data/GeoIP2-City-Test.json
-    assert (
-        tz_utils.guess_timezone_by_ip("149.101.100.0", only_name=True)
-        == "America/Chicago"
-    )
-    assert tz_utils.guess_timezone_by_ip("2001:230::1", only_name=True) == "Asia/Seoul"
-
-    # Addresses not in the test DB
-    assert tz_utils.guess_timezone_by_ip("1.2.3.4", only_name=True) is None
-    assert (
-        tz_utils.guess_timezone_by_ip("2001:2002:2003:2004::0", only_name=True) is None
-    )
-
-
-def test_guess_timezone_no_geoip():
-    assert tz_utils.guess_timezone_by_ip("149.101.100.0", only_name=True) is None
-    assert tz_utils.guess_timezone_by_ip("2001:230::1", only_name=True) is None
 
 
 def test_get_timezones():

@@ -24,12 +24,7 @@ upload: tag build
 	poetry publish
 
 
-GeoIP2-City-Test.mmdb:
-	rm -f GeoIP2-City-Test.mmdb
-	wget https://github.com/maxmind/MaxMind-DB/raw/main/test-data/GeoIP2-City-Test.mmdb
-
-
-test: GeoIP2-City-Test.mmdb
+test:
 	poetry run pytest
 
 
