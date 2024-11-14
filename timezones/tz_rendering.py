@@ -70,12 +70,12 @@ def html_render_timezones(
     if select_id:
         select_elm = f'<select name="{select_name}" id="{select_id}">'
     else:
-        select_elm = '<select name="%s">' % select_name
+        select_elm = f'<select name="{select_name}">'
 
     result = [select_elm]
 
     if first_entry:
-        result.append('<option value="">%s</option>' % first_entry)
+        result.append(f'<option value="">{first_entry}</option>')
         result.append(render_option_disabled())
 
     if force_current_selected and current_selected:

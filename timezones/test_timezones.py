@@ -1,5 +1,3 @@
-import os.path
-
 import pytest
 
 from . import _defs, tz_rendering, tz_utils, zones
@@ -63,7 +61,7 @@ def test_valid_offset(offset_str, tzname, verbose_name):
     assert offset_str == expected_offset, f"Invalid offset for {tzname}"
 
     # 3. Test verbose name
-    assert verbose_name.startswith("(GMT%s) " % expected_offset)
+    assert verbose_name.startswith(f"(GMT{expected_offset}) ")
 
 
 def test_get_timezones_json():
