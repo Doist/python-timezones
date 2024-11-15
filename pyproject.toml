@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "timezones"
-version = "2.2.0"
+version = "3.0.0"
 description = "A Python library that provides better selection of common timezones, can output HTML and auto select the best timezone based on user's IP."
 license = "MIT"
 keywords = ["timezones", "timezone"]
