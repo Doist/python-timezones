@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 import pytest
 
 from . import _defs, tz_rendering, tz_utils, zones
@@ -74,3 +76,80 @@ def test_aliases(tzname):
     _, name, formatted = tz_utils.format_tz_by_name(tzname)
     assert name == tzname
     assert tzname in formatted
+
+
+def test_get_timezones_lists_vancouver():
+    # Given British Columbia has its own timezone from November 2026
+    vancouver_labels = []
+
+    # When the supported timezones are listed
+    all_timezones = zones.get_timezones()
+
+    # Then America/Vancouver is offered under its own name
+    for offset_str, tzname, verbose_name in all_timezones:
+        if tzname == "America/Vancouver":
+            vancouver_labels.append(verbose_name)
+    assert len(vancouver_labels) == 1
+    assert vancouver_labels[0].endswith(") Vancouver")
+
+
+def test_get_timezones_lists_edmonton():
+    # Given Alberta has its own timezone from November 2026
+    edmonton_labels = []
+
+    # When the supported timezones are listed
+    all_timezones = zones.get_timezones()
+
+    # Then America/Edmonton is offered under its own name
+    for offset_str, tzname, verbose_name in all_timezones:
+        if tzname == "America/Edmonton":
+            edmonton_labels.append(verbose_name)
+    assert len(edmonton_labels) == 1
+    assert edmonton_labels[0].endswith(") Edmonton")
+
+
+def test_get_timezones_lists_winnipeg():
+    # Given Manitoba has its own timezone from November 2026
+    winnipeg_labels = []
+
+    # When the supported timezones are listed
+    all_timezones = zones.get_timezones()
+
+    # Then America/Winnipeg is offered under its own name
+    for offset_str, tzname, verbose_name in all_timezones:
+        if tzname == "America/Winnipeg":
+            winnipeg_labels.append(verbose_name)
+    assert len(winnipeg_labels) == 1
+    assert winnipeg_labels[0].endswith(") Winnipeg")
+
+
+def test_get_timezones_offers_us_central_time_only_for_us_central():
+    # Given Manitoba no longer follows US Central time from November 2026
+    central_time_zone_names = []
+
+    # When the supported timezones are listed
+    all_timezones = zones.get_timezones()
+
+    # Then "Central Time (US & Canada)" is offered only for US/Central
+    for offset_str, tzname, verbose_name in all_timezones:
+        if verbose_name.endswith(") Central Time (US & Canada)"):
+            central_time_zone_names.append(tzname)
+    assert central_time_zone_names == ["US/Central"]
+
+
+def test_get_timezones_keeps_central_america_on_utc_minus_6():
+    # Given a date in December 2026, after Manitoba stops changing its clocks
+    december_2026 = datetime(2026, 12, 1, 12, 0)
+    central_america_zone_names = []
+
+    # When the supported timezones are listed
+    all_timezones = zones.get_timezones()
+
+    # Then "Central America" is offered once, on a zone that is at UTC-6 then
+    for offset_str, tzname, verbose_name in all_timezones:
+        if verbose_name.endswith(") Central America"):
+            central_america_zone_names.append(tzname)
+    assert len(central_america_zone_names) == 1
+    central_america_zone = tz_utils.get_timezone(central_america_zone_names[0])
+    assert central_america_zone is not None
+    assert central_america_zone.utcoffset(december_2026) == timedelta(hours=-6)

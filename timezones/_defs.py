@@ -31,11 +31,12 @@ _ALL_TIMEZONES = [
     ("US/Arizona", "Arizona"),
     ("America/Mazatlan", "Mazatlan"),
     ("US/Mountain", "Mountain Time (US & Canada)"),
+    ("America/Vancouver", "Vancouver"),
     # -06
     ("America/Chihuahua", "Chihuahua"),
     ("US/Central", "Central Time (US & Canada)"),
-    ("Canada/Central", "Central America"),
-    ("Canada/Central", "Central Time (US & Canada)"),
+    ("America/Guatemala", "Central America"),
+    ("America/Edmonton", "Edmonton"),
     ("Mexico/General", "Guadalajara"),
     ("Mexico/General", "Mexico City"),
     ("America/Monterrey", "Monterrey"),
@@ -47,6 +48,7 @@ _ALL_TIMEZONES = [
     ("America/Lima", "Lima"),
     ("America/Rio_Branco", "Rio Branco"),
     ("Etc/GMT+5", "Quito"),  # "plus" value is correct!
+    ("America/Winnipeg", "Winnipeg"),
     # -04
     ("America/Caracas", "Caracas"),
     ("Canada/Atlantic", "Atlantic Time (Canada)"),
