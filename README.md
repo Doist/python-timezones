@@ -13,6 +13,6 @@ optional HTML output.
 
 Visit https://doist.github.io/python-timezones/ for more information.
 
-Copyright: 2012-2024 by Doist
+Copyright: 2012-2026 by Doist
 
 License: MIT.

@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [4.0.0] - 2026-10-28
 ### Added
 - Add `America/Vancouver`, since British Columbia stays on UTC-7 all year from November 2026.
 - Add `America/Edmonton` and `America/Winnipeg`, since Alberta and Manitoba stay on UTC-6 and UTC-5 all year from November 2026.
