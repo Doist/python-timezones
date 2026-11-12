@@ -7,10 +7,10 @@ Timezone = tuple[
 _US_TIMEZONES = [
     ("US/Hawaii", "Hawaii"),
     ("US/Alaska", "Alaska"),
-    ("US/Pacific", "Pacific Time (US & Canada)"),
+    ("US/Pacific", "Pacific Time (US)"),
     ("US/Arizona", "Arizona"),
-    ("US/Mountain", "Mountain Time (US & Canada)"),
-    ("US/Central", "Central Time (US & Canada)"),
+    ("US/Mountain", "Mountain Time (US)"),
+    ("US/Central", "Central Time (US)"),
     ("US/Eastern", "Eastern Time (US & Canada)"),
     ("US/East-Indiana", "Indiana (East)"),
 ]
@@ -25,18 +25,18 @@ _ALL_TIMEZONES = [
     # -09
     ("US/Alaska", "Alaska"),
     # -08
-    ("US/Pacific", "Pacific Time (US & Canada)"),
+    ("US/Pacific", "Pacific Time (US)"),
     ("America/Tijuana", "Tijuana"),
     # -07
     ("US/Arizona", "Arizona"),
+    ("America/Vancouver", "British Columbia, Yukon"),
     ("America/Mazatlan", "Mazatlan"),
-    ("US/Mountain", "Mountain Time (US & Canada)"),
-    ("America/Vancouver", "Vancouver"),
+    ("US/Mountain", "Mountain Time (US)"),
     # -06
+    ("America/Edmonton", "Alberta, Northwest Territories"),
     ("America/Chihuahua", "Chihuahua"),
-    ("US/Central", "Central Time (US & Canada)"),
+    ("US/Central", "Central Time (US)"),
     ("America/Guatemala", "Central America"),
-    ("America/Edmonton", "Edmonton"),
     ("Mexico/General", "Guadalajara"),
     ("Mexico/General", "Mexico City"),
     ("America/Monterrey", "Monterrey"),
@@ -46,9 +46,9 @@ _ALL_TIMEZONES = [
     ("US/Eastern", "Eastern Time (US & Canada)"),
     ("US/East-Indiana", "Indiana (East)"),
     ("America/Lima", "Lima"),
+    ("America/Winnipeg", "Manitoba, Northwestern Ontario"),
     ("America/Rio_Branco", "Rio Branco"),
     ("Etc/GMT+5", "Quito"),  # "plus" value is correct!
-    ("America/Winnipeg", "Winnipeg"),
     # -04
     ("America/Caracas", "Caracas"),
     ("Canada/Atlantic", "Atlantic Time (Canada)"),

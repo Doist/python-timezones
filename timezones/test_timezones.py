@@ -85,12 +85,12 @@ def test_get_timezones_lists_vancouver():
     # When the supported timezones are listed
     all_timezones = zones.get_timezones()
 
-    # Then America/Vancouver is offered under its own name
+    # Then America/Vancouver is offered once, named after the places that use it
     for offset_str, tzname, verbose_name in all_timezones:
         if tzname == "America/Vancouver":
             vancouver_labels.append(verbose_name)
     assert len(vancouver_labels) == 1
-    assert vancouver_labels[0].endswith(") Vancouver")
+    assert vancouver_labels[0].endswith(") British Columbia, Yukon")
 
 
 def test_get_timezones_lists_edmonton():
@@ -100,12 +100,12 @@ def test_get_timezones_lists_edmonton():
     # When the supported timezones are listed
     all_timezones = zones.get_timezones()
 
-    # Then America/Edmonton is offered under its own name
+    # Then America/Edmonton is offered once, named after the places that use it
     for offset_str, tzname, verbose_name in all_timezones:
         if tzname == "America/Edmonton":
             edmonton_labels.append(verbose_name)
     assert len(edmonton_labels) == 1
-    assert edmonton_labels[0].endswith(") Edmonton")
+    assert edmonton_labels[0].endswith(") Alberta, Northwest Territories")
 
 
 def test_get_timezones_lists_winnipeg():
@@ -115,26 +115,28 @@ def test_get_timezones_lists_winnipeg():
     # When the supported timezones are listed
     all_timezones = zones.get_timezones()
 
-    # Then America/Winnipeg is offered under its own name
+    # Then America/Winnipeg is offered once, named after the places that use it
     for offset_str, tzname, verbose_name in all_timezones:
         if tzname == "America/Winnipeg":
             winnipeg_labels.append(verbose_name)
     assert len(winnipeg_labels) == 1
-    assert winnipeg_labels[0].endswith(") Winnipeg")
+    assert winnipeg_labels[0].endswith(") Manitoba, Northwestern Ontario")
 
 
-def test_get_timezones_offers_us_central_time_only_for_us_central():
-    # Given Manitoba no longer follows US Central time from November 2026
-    central_time_zone_names = []
+@pytest.mark.parametrize("only_us", [False, True])
+def test_get_timezones_says_us_and_canada_only_for_eastern_time(only_us):
+    # Given British Columbia, Alberta and Manitoba no longer follow US Pacific,
+    # Mountain and Central time from November 2026
+    us_and_canada_zone_names = []
 
-    # When the supported timezones are listed
-    all_timezones = zones.get_timezones()
+    # When the timezones are listed
+    timezones = zones.get_timezones(only_us=only_us)
 
-    # Then "Central Time (US & Canada)" is offered only for US/Central
-    for offset_str, tzname, verbose_name in all_timezones:
-        if verbose_name.endswith(") Central Time (US & Canada)"):
-            central_time_zone_names.append(tzname)
-    assert central_time_zone_names == ["US/Central"]
+    # Then only Eastern Time is still offered as "US & Canada"
+    for offset_str, tzname, verbose_name in timezones:
+        if verbose_name.endswith(" (US & Canada)"):
+            us_and_canada_zone_names.append(tzname)
+    assert us_and_canada_zone_names == ["US/Eastern"]
 
 
 def test_get_timezones_keeps_central_america_on_utc_minus_6():
