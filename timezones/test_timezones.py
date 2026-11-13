@@ -127,16 +127,23 @@ def test_get_timezones_lists_winnipeg():
 def test_get_timezones_says_us_and_canada_only_for_eastern_time(only_us):
     # Given British Columbia, Alberta and Manitoba no longer follow US Pacific,
     # Mountain and Central time from November 2026
-    us_and_canada_zone_names = []
+    us_zone_labels = {}
 
     # When the timezones are listed
     timezones = zones.get_timezones(only_us=only_us)
 
-    # Then only Eastern Time is still offered as "US & Canada"
+    # Then Pacific, Mountain and Central Time are offered for the US only, and
+    # only Eastern Time is still offered as "US & Canada"
     for offset_str, tzname, verbose_name in timezones:
-        if verbose_name.endswith(" (US & Canada)"):
-            us_and_canada_zone_names.append(tzname)
-    assert us_and_canada_zone_names == ["US/Eastern"]
+        label = verbose_name.split(") ", 1)[1]
+        if label.endswith(("(US)", "(US & Canada)")):
+            us_zone_labels[tzname] = label
+    assert us_zone_labels == {
+        "US/Pacific": "Pacific Time (US)",
+        "US/Mountain": "Mountain Time (US)",
+        "US/Central": "Central Time (US)",
+        "US/Eastern": "Eastern Time (US & Canada)",
+    }
 
 
 def test_get_timezones_keeps_central_america_on_utc_minus_6():
