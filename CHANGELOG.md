@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [4.0.1] - 2026-11-13
 ### Changed
 - Name `America/Vancouver`, `America/Edmonton` and `America/Winnipeg` after the places that use them: "British Columbia, Yukon", "Alberta, Northwest Territories" and "Manitoba, Northwestern Ontario".
 - "Pacific Time", "Mountain Time" and "Central Time" say "(US)" instead of "(US & Canada)", since British Columbia, Alberta and Manitoba no longer follow them. "Eastern Time (US & Canada)" stays as it is.
