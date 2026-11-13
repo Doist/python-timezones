@@ -15,7 +15,7 @@ Example usage (returns US based timezones)::
 
         "(GMT-1000) Hawaii')"
         "(GMT-0900) Alaska')"
-        "(GMT-0800) Pacific Time (US & Canada)"
+        "(GMT-0800) Pacific Time (US)"
         ...
 
 :copyright: 2012 by Amir Salihefendic ( http://amix.dk/ )
